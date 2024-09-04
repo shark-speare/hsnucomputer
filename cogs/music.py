@@ -18,13 +18,13 @@ class Music(commands.Cog):
             await interaction.followup.send(f'機器人不在頻道內，請考慮使用/join')
         else:
             try:
+                
                 yt = YouTube(url,use_oauth=True)
-                yt.streams.get_audio_only().download(filename='song',mp3=True)
-
-                voice.play(discord.FFmpegPCMAudio(source='song.mp3',executable='ffmpeg/bin/ffmpeg.exe'))
+                yt.streams.get_audio_only().download(filename=str(interaction.guild_id),mp3=True)
+                voice.play(discord.FFmpegPCMAudio(source=f'{interaction.guild_id}.mp3'))
                 await interaction.followup.send(f'正在播放: [{yt.title}]({url}d)')
             except Exception as e:
-                print(e)
+                await print(e)
 
     @app_commands.command(description='加入使用者目前頻道')
     async def join(self,interaction:discord.Interaction):
