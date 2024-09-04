@@ -10,6 +10,7 @@ class Lofi(commands.Cog):
 
     @app_commands.command(description='播放1小時Lofi')
     async def lofi(self,interaction:discord.Interaction):
+        await interaction.response.defer()
         voice = discord.utils.get(self.bot.voice_clients,guild=interaction.guild)
         if not voice:
             await interaction.followup.send(f'機器人不在頻道內，請考慮使用/join')
