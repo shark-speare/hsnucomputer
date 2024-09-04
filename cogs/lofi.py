@@ -22,3 +22,6 @@ class Lofi(commands.Cog):
                 await interaction.followup.send(f'正在播放: [{yt.title}]({yt.watch_url}d)')
             except Exception as e:
                 await print(e)
+
+async def setup(bot:commands.Bot):
+    await bot.add_cog(Lofi(bot))
