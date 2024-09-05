@@ -12,13 +12,14 @@ class Music(commands.Cog):
     @app_commands.describe(url='影片網址')
     async def play(self,interaction:discord.Interaction,url:str):
         await interaction.response.defer()
-        voice = discord.utils.get(self.bot.voice_clients,guild=interaction.guild)
+        voice:Optional[discord.VoiceClient|None] = discord.utils.get(self.bot.voice_clients,guild=interaction.guild)
         
         if not voice:
             await interaction.followup.send(f'機器人不在頻道內，請考慮使用/join')
         else:
             try:
-                
+                if voice.is_playing:
+                    voice.stop()
                 yt = YouTube(url,use_oauth=True)
                 yt.streams.get_audio_only().download(filename=str(interaction.guild_id),mp3=True)
                 voice.play(discord.FFmpegPCMAudio(source=f'{interaction.guild_id}.mp3'))
