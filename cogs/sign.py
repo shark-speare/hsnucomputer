@@ -15,7 +15,7 @@ class Sign(commands.Cog):
         all:dict = json.load(all_data)
         
         day_data = open('./cogs/day.json',mode='r+',encoding='utf8')
-        day = json.load(day_data)
+        day:dict = json.load(day_data)
 
         if name not in all:
             await interaction.followup.send('這個名字不在點名名單內')
@@ -29,5 +29,52 @@ class Sign(commands.Cog):
         json.dump(day,day_data,ensure_ascii=False)
         await interaction.followup.send(f'{name} 已簽到')
 
+<<<<<<< HEAD
+=======
+    @app_commands.command(description="確認今日名單")
+    async def check(self,interaction:discord.Interaction):
+        
+        await interaction.response.defer()
+        all_data = open('./cogs/all.json',mode='r+',encoding='utf8')
+        all:dict = json.load(all_data)
+
+        day_data = open('./cogs/day.json',mode='r+',encoding='utf8')
+        day:dict = json.load(day_data)
+
+        no_check = []
+        
+        for name in all.keys():
+            if day[name] != 1:
+                    no_check.append(name)
+        print(no_check)
+        
+        if no_check:
+            await interaction.followup.send(" ".join(no_check)+"尚未簽到")
+        else:
+            await interaction.followup.send("全簽到完成")
+        
+
+    @app_commands.command()
+    @app_commands.checks.has_role("46屆幹部")
+    async def reset(self,interaction:discord.Interaction):
+        await interaction.response.defer()
+        try:
+            all_data = open('./cogs/all.json',mode='r',encoding='utf8')
+            all:dict = json.load(all_data)
+    
+            day_data = open('./cogs/day.json',mode='w',encoding='utf8')
+            
+    
+            init = {}
+            for name in all.keys():
+                init[name] = 0
+    
+            json.dump(init,day_data,ensure_ascii=False)
+            
+            await interaction.followup.send("清除完成")
+        except Exception as e:
+            print(e)
+
+>>>>>>> 41ab4561c1cdd0f0b9f1adf0f7721fce08926d45
 async def setup(bot):
     await bot.add_cog(Sign(bot))
