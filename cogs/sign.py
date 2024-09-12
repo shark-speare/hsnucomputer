@@ -29,8 +29,5 @@ class Sign(commands.Cog):
         json.dump(day,day_data,ensure_ascii=False)
         await interaction.followup.send(f'{name} 已簽到')
 
-    @app_commands.command()
-    async def unsign(self)
-
 async def setup(bot):
     await bot.add_cog(Sign(bot))

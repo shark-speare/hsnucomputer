@@ -4,26 +4,32 @@ from discord.ext import commands
 from pytubefix import YouTube
 from typing import Optional
 
+
+
 class Music(commands.Cog):
     def __init__(self,bot:commands.Bot):
         self.bot = bot
+        self.queue = []
 
     @app_commands.command(description='播放Youtube音樂')
-    @app_commands.describe(url='影片網址')
-    async def play(self,interaction:discord.Interaction,url:str):
+    @app_commands.describe(網址='影片網址')
+    async def play(self,interaction:discord.Interaction,網址:str):
         await interaction.response.defer()
-        voice = discord.utils.get(self.bot.voice_clients,guild=interaction.guild)
+        voice:Optional[discord.VoiceClient] = discord.utils.get(self.bot.voice_clients,guild=interaction.guild)
         
         if not voice:
             await interaction.followup.send(f'機器人不在頻道內，請考慮使用/join')
         else:
             try:
-                if voice.is_playing:
-                    voice.stop()
-                yt = YouTube(url,use_oauth=True)
-                yt.streams.get_audio_only().download(filename=str(interaction.guild_id),mp3=True)
-                voice.play(discord.FFmpegPCMAudio(source=f'{interaction.guild_id}.mp3'))
-                await interaction.followup.send(f'正在播放: [{yt.title}]({url}d)')
+                if voice.is_playing():
+
+                    self.queue.append(網址)
+                    await interaction.followup.send('已加入隊列中')
+                else:
+                    yt = YouTube(網址,use_oauth=True)
+                    yt.streams.get_audio_only().download(filename=str(interaction.guild_id),mp3=True)
+                    voice.play(discord.FFmpegPCMAudio(source=f'{interaction.guild_id}.mp3'),after=lambda x=None: self.play_next(interaction.guild))
+                    await interaction.followup.send(f'正在播放: [{yt.title}]({網址}d)')
             except Exception as e:
                 await print(e)
 
@@ -61,7 +67,6 @@ class Music(commands.Cog):
         else:
             await interaction.followup.send('已暫停')
             await voice.pause()
-            
 
     @app_commands.command(description='繼續播放')
     async def resume(self,interaction:discord.Interaction):
@@ -73,7 +78,6 @@ class Music(commands.Cog):
             await interaction.followup.send('已繼續')
             await voice.resume()
             
-
     @app_commands.command(description='停止播放')
     async def stop(self,interaction:discord.Interaction):
         await interaction.response.defer()
@@ -83,6 +87,32 @@ class Music(commands.Cog):
         else:
             await interaction.followup.send('已停止')
             await voice.stop()
+
+    @app_commands.command()
+    async def next(self,interaction:discord.Interaction):
+        await interaction.response.defer()
+        voice:Optional[discord.VoiceClient] = discord.utils.get(self.bot.voice_clients,guild=interaction.guild)
+        
+        if self.queue != []:
+            voice.stop()
+            url = self.queue.pop(0)
+            yt = YouTube(url,use_oauth=True)
+            yt.streams.get_audio_only().download(filename=str(interaction.guild_id),mp3=True)
+            voice.play(discord.FFmpegPCMAudio(source=f'{interaction.guild_id}.mp3'),after=lambda x=None: self.play_next(interaction.guild))
+            await interaction.followup.send(f'正在播放: [{yt.title}]({url}d)')
+        else:
+            await interaction.followup.send('目前隊列空白')
+
+    def play_next(self,guild:discord.Guild):
+        voice:Optional[discord.VoiceClient] = discord.utils.get(self.bot.voice_clients,guild=guild)
+        if self.queue!= []:
+            voice.stop()
+            url = self.queue.pop(0)
+            yt = YouTube(url,use_oauth=True)
+            yt.streams.get_audio_only().download(filename=str(guild.id),mp3=True)
+            voice.play(discord.FFmpegPCMAudio(source=f'{guild.id}.mp3'),after=lambda x=None: self.play_next(guild))
+        else:
+            pass
 
 async def setup(bot:commands.Bot):
     await bot.add_cog(Music(bot))
