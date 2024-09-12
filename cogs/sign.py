@@ -29,8 +29,6 @@ class Sign(commands.Cog):
         json.dump(day,day_data,ensure_ascii=False)
         await interaction.followup.send(f'{name} 已簽到')
 
-<<<<<<< HEAD
-=======
     @app_commands.command(description="確認今日名單")
     async def check(self,interaction:discord.Interaction):
         
@@ -75,6 +73,5 @@ class Sign(commands.Cog):
         except Exception as e:
             print(e)
 
->>>>>>> 41ab4561c1cdd0f0b9f1adf0f7721fce08926d45
 async def setup(bot):
     await bot.add_cog(Sign(bot))
