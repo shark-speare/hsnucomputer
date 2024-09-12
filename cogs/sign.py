@@ -30,6 +30,7 @@ class Sign(commands.Cog):
         await interaction.followup.send(f'{name} 已簽到')
 
     @app_commands.command(description="確認今日名單")
+    @app_commands.checks.has_role("46屆幹部")
     async def check(self,interaction:discord.Interaction):
         
         await interaction.response.defer()
@@ -44,7 +45,7 @@ class Sign(commands.Cog):
         for name in all.keys():
             if day[name] != 1:
                     no_check.append(name)
-        print(no_check)
+        
         
         if no_check:
             await interaction.followup.send(" ".join(no_check)+"尚未簽到")
