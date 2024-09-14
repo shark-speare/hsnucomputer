@@ -6,11 +6,16 @@ import json
 class Sign(commands.Cog):
     def __init__(self,bot:commands.Bot):
         self.bot = bot
+        self.keyword = "測試"
 
     @app_commands.command(description='上課簽到')
-    async def sign(self,interaction:discord.Interaction,輸入名字:str):
-        await interaction.response.defer()
-        
+    async def sign(self,interaction:discord.Interaction,輸入名字:str,今日關鍵字:str):
+        await interaction.response.defer(ephemeral=True)
+        if 今日關鍵字!=self.keyword:
+            await interaction.followup.send("關鍵字錯誤")
+            return
+
+
         all_data = open('./cogs/all.json',mode='r+',encoding='utf8')
         all:dict = json.load(all_data)
         
@@ -27,13 +32,13 @@ class Sign(commands.Cog):
         day_data.truncate()
 
         json.dump(day,day_data,ensure_ascii=False)
-        await interaction.followup.send(f'{輸入名字} 已簽到')
+        await interaction.followup.send(f'{輸入名字} 已簽到',ephemeral=True)
 
     @app_commands.command(description="確認今日名單")
     @app_commands.checks.has_role("46屆幹部")
     async def check(self,interaction:discord.Interaction):
         
-        await interaction.response.defer()
+        await interaction.response.defer(ephemeral=True)
         all_data = open('./cogs/all.json',mode='r+',encoding='utf8')
         all:dict = json.load(all_data)
 
@@ -52,7 +57,6 @@ class Sign(commands.Cog):
         else:
             await interaction.followup.send("全簽到完成")
         
-
     @app_commands.command(description="重設全部人名單")
     @app_commands.checks.has_role("46屆幹部")
     async def reset(self,interaction:discord.Interaction):
@@ -73,6 +77,12 @@ class Sign(commands.Cog):
             await interaction.followup.send("清除完成")
         except Exception as e:
             print(e)
+
+    @app_commands.command(description='設定今日關鍵字')
+    @app_commands.checks.has_role("46屆幹部")
+    async def keyword(self,interaction:discord.Interaction,keyword:str):
+        self.keyword = keyword
+        await interaction.response.send_message(f'今日關鍵字設定為{keyword}',ephemeral=True)
 
 async def setup(bot):
     await bot.add_cog(Sign(bot))
