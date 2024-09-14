@@ -31,31 +31,54 @@ class Sign(commands.Cog):
         day_data.seek(0)
         day_data.truncate()
 
-        json.dump(day,day_data,ensure_ascii=False)
+        json.dump(day,day_data,ensure_ascii=False,indent=4)
         await interaction.followup.send(f'{輸入名字} 已簽到',ephemeral=True)
+
+    @app_commands.command(description="取消簽到")
+    @app_commands.checks.has_role("46屆幹部")
+    async def unsign(self,interaction:discord.Interaction,輸入名字:str):
+        await interaction.response.defer(ephemeral=True)
+        try:
+            day_data = open('./cogs/day.json',mode='r+',encoding='utf8')
+            day:dict = json.load(day_data)
+
+            if 輸入名字 not in day:
+                await interaction.followup.send('這個名字不在點名名單內')
+                return
+
+            day[輸入名字] = 0
+            day_data.seek(0)
+            day_data.truncate()
+
+            json.dump(day,day_data,ensure_ascii=False,indent=4)
+            await interaction.followup.send(f'{輸入名字} 已取消簽到',ephemeral=True)
+        except Exception as e:
+            print(e)
 
     @app_commands.command(description="確認今日名單")
     @app_commands.checks.has_role("46屆幹部")
     async def check(self,interaction:discord.Interaction):
-        
-        await interaction.response.defer(ephemeral=True)
-        all_data = open('./cogs/all.json',mode='r+',encoding='utf8')
-        all:dict = json.load(all_data)
+        try:
+            await interaction.response.defer(ephemeral=True)
+            all_data = open('./cogs/all.json',mode='r+',encoding='utf8')
+            all:dict = json.load(all_data)
 
-        day_data = open('./cogs/day.json',mode='r+',encoding='utf8')
-        day:dict = json.load(day_data)
+            day_data = open('./cogs/day.json',mode='r+',encoding='utf8')
+            day:dict = json.load(day_data)
 
-        no_check = []
-        
-        for 輸入名字 in all.keys():
-            if day[輸入名字] != 1:
-                    no_check.append(輸入名字)
-        
-        
-        if no_check:
-            await interaction.followup.send(" ".join(no_check)+"尚未簽到")
-        else:
-            await interaction.followup.send("全簽到完成")
+            no_check = []
+            
+            for 輸入名字 in all.keys():
+                if day[輸入名字] != 1:
+                        no_check.append(輸入名字)
+            
+            
+            if no_check:
+                await interaction.followup.send(" ".join(no_check)+"尚未簽到")
+            else:
+                await interaction.followup.send("全簽到完成")
+        except Exception as e:
+            print(e)
         
     @app_commands.command(description="重設全部人名單")
     @app_commands.checks.has_role("46屆幹部")
@@ -72,7 +95,7 @@ class Sign(commands.Cog):
             for 輸入名字 in all.keys():
                 init[輸入名字] = 0
     
-            json.dump(init,day_data,ensure_ascii=False)
+            json.dump(init,day_data,ensure_ascii=False,indent=4)
             
             await interaction.followup.send("清除完成")
         except Exception as e:
