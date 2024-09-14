@@ -8,7 +8,7 @@ class Sign(commands.Cog):
         self.bot = bot
 
     @app_commands.command(description='上課簽到')
-    async def sign(self,interaction:discord.Interaction,name:str):
+    async def sign(self,interaction:discord.Interaction,輸入名字:str):
         await interaction.response.defer()
         
         all_data = open('./cogs/all.json',mode='r+',encoding='utf8')
@@ -17,17 +17,17 @@ class Sign(commands.Cog):
         day_data = open('./cogs/day.json',mode='r+',encoding='utf8')
         day:dict = json.load(day_data)
 
-        if name not in all:
+        if 輸入名字 not in all:
             await interaction.followup.send('這個名字不在點名名單內')
             return
         
-        day[name] = 1
+        day[輸入名字] = 1
 
         day_data.seek(0)
         day_data.truncate()
 
         json.dump(day,day_data,ensure_ascii=False)
-        await interaction.followup.send(f'{name} 已簽到')
+        await interaction.followup.send(f'{輸入名字} 已簽到')
 
     @app_commands.command(description="確認今日名單")
     @app_commands.checks.has_role("46屆幹部")
@@ -42,9 +42,9 @@ class Sign(commands.Cog):
 
         no_check = []
         
-        for name in all.keys():
-            if day[name] != 1:
-                    no_check.append(name)
+        for 輸入名字 in all.keys():
+            if day[輸入名字] != 1:
+                    no_check.append(輸入名字)
         
         
         if no_check:
@@ -53,7 +53,7 @@ class Sign(commands.Cog):
             await interaction.followup.send("全簽到完成")
         
 
-    @app_commands.command()
+    @app_commands.command(description="重設全部人名單")
     @app_commands.checks.has_role("46屆幹部")
     async def reset(self,interaction:discord.Interaction):
         await interaction.response.defer()
@@ -65,8 +65,8 @@ class Sign(commands.Cog):
             
     
             init = {}
-            for name in all.keys():
-                init[name] = 0
+            for 輸入名字 in all.keys():
+                init[輸入名字] = 0
     
             json.dump(init,day_data,ensure_ascii=False)
             
