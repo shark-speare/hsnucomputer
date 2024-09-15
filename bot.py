@@ -17,6 +17,8 @@ async def on_ready():
 
 @bot.event
 async def on_member_join(member:discord.Member):
+    if member.guild.id != 1260815515044286494:
+        return
     welcome = bot.get_channel(1260819993356931154)
     rule = bot.get_channel(1260815515044286497)
     
