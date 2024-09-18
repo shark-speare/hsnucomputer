@@ -14,7 +14,7 @@ class Chat(commands.Cog):
 
     @app_commands.command(description="與Gemini Flash 1.5聊天")
     async def gemini(self,interaction:discord.Interaction,聊天內容:str):
-        await interaction.response.defer(ephemeral=True)
+        await interaction.response.defer()
         response = self.model.generate_content(f"請用繁體中文回答以下問題:\n{聊天內容}")
         await interaction.followup.send(response.text)
 
