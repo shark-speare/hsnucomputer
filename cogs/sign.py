@@ -74,7 +74,7 @@ class Sign(commands.Cog):
             
             
             if no_check:
-                await interaction.followup.send(" ".join(no_check)+"尚未簽到")
+                await interaction.followup.send("\n".join(no_check)+"尚未簽到")
             else:
                 await interaction.followup.send("全簽到完成")
         except Exception as e:
