@@ -3,6 +3,8 @@ from discord import app_commands
 from discord.ext import commands
 from pytubefix import Playlist,YouTube
 import random
+import os
+import json
 
 class Lofi(commands.Cog):
     def __init__(self,bot:commands.Bot):
@@ -16,11 +18,16 @@ class Lofi(commands.Cog):
             await interaction.followup.send(f'機器人不在頻道內，請考慮使用/join')
         else:
             try:
-                playlist = Playlist('https://www.youtube.com/playlist?list=PL0PDUyeuJRS2hdiwy9B0FZtQ52QCFW0nS',use_oauth=True)
-                yt:YouTube = random.choice(playlist.videos)
-                yt.streams.get_audio_only().download(filename=f'{interaction.guild_id}_lofi',mp3=True)
-                voice.play(discord.FFmpegPCMAudio(source=f'{interaction.guild_id}_lofi.mp3'))
-                await interaction.followup.send(f'正在播放: [{yt.title}]({yt.watch_url}d)')
+                
+                with open('playlist.json',mode='r',encoding='utf8') as file:
+                    urls = json.load(file)
+                    songs = os.listdir('lofis')
+
+                    song = random.choice(songs)
+                    url = urls[song]
+
+                    voice.play(discord.FFmpegPCMAudio(f'lofis/{song}'))
+                    await interaction.followup.send(f'正在播放({song})[{url}]',ephemeral=True)
             except Exception as e:
                 await print(e)
 
