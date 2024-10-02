@@ -26,7 +26,7 @@ class Music(commands.Cog):
                     self.queue.append(網址)
                     await interaction.followup.send('已加入隊列中')
                 else:
-                    yt = YouTube(網址,use_oauth=True)
+                    yt = YouTube(網址,use_oauth=True,client='WEB_CREATOR')
                     yt.streams.get_audio_only().download(filename=str(interaction.guild_id),mp3=True)
                     voice.play(discord.FFmpegPCMAudio(source=f'{interaction.guild_id}.mp3'),after=lambda x=None: self.play_next(interaction.guild))
                     await interaction.followup.send(f'正在播放: [{yt.title}]({網址}d)')

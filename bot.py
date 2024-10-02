@@ -46,7 +46,7 @@ async def say(ctx,content):
 
 async def load_ext():
     for filename in os.listdir("./cogs"):
-        if filename.endswith(".py"):
+        if filename.endswith(".py") and not filename.startswith("_"):
             await bot.load_extension(f"cogs.{filename[:-3]}")
             print(f"Loaded {filename}")
     

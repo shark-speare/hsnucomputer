@@ -16,10 +16,10 @@ class Sign(commands.Cog):
             return
 
 
-        all_data = open('./cogs/all.json',mode='r+',encoding='utf8')
+        all_data = open('./data/all.json',mode='r+',encoding='utf8')
         all:dict = json.load(all_data)
         
-        day_data = open('./cogs/day.json',mode='r+',encoding='utf8')
+        day_data = open('./data/day.json',mode='r+',encoding='utf8')
         day:dict = json.load(day_data)
 
         if 輸入名字 not in all:
@@ -39,7 +39,7 @@ class Sign(commands.Cog):
     async def unsign(self,interaction:discord.Interaction,輸入名字:str):
         await interaction.response.defer(ephemeral=True)
         try:
-            day_data = open('./cogs/day.json',mode='r+',encoding='utf8')
+            day_data = open('./data/day.json',mode='r+',encoding='utf8')
             day:dict = json.load(day_data)
 
             if 輸入名字 not in day:
@@ -60,10 +60,10 @@ class Sign(commands.Cog):
     async def check(self,interaction:discord.Interaction):
         try:
             await interaction.response.defer(ephemeral=True)
-            all_data = open('./cogs/all.json',mode='r+',encoding='utf8')
+            all_data = open('./data/all.json',mode='r+',encoding='utf8')
             all:dict = json.load(all_data)
 
-            day_data = open('./cogs/day.json',mode='r+',encoding='utf8')
+            day_data = open('./data/day.json',mode='r+',encoding='utf8')
             day:dict = json.load(day_data)
 
             no_check = []
@@ -85,10 +85,10 @@ class Sign(commands.Cog):
     async def reset(self,interaction:discord.Interaction):
         await interaction.response.defer()
         try:
-            all_data = open('./cogs/all.json',mode='r',encoding='utf8')
+            all_data = open('./data/all.json',mode='r',encoding='utf8')
             all:dict = json.load(all_data)
     
-            day_data = open('./cogs/day.json',mode='w',encoding='utf8')
+            day_data = open('./data/day.json',mode='w',encoding='utf8')
             
     
             init = {}
