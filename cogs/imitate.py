@@ -8,7 +8,8 @@ class Imitate(commands.Cog):
 
     @commands.command()
     async def imitate(self,ctx:commands.Context,member_id:int,content:str):
-        
+        if ctx.channel.id == 1290134122475425914:
+            return
         member = await ctx.guild.fetch_member(member_id)
         avatar_url = member.display_avatar.url
         name = member.display_name
