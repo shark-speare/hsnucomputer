@@ -85,7 +85,7 @@ class Count(commands.Cog):
             with open('./data/count.json',mode='r',encoding='utf8') as f:
                 data = json.load(f)
                 
-                if msg.id == data['msg']:
+                if msg.id == data['msg'] and msg.webhook_id == None:
                     name = msg.author.display_name
                     avatar = msg.author.avatar.url
                     url = "https://discord.com/api/webhooks/1290920685610471455/kKBtgildF2r1SPm-4KX8dJ0yUPLeh41ALotsU7BkHm9vhSSIWYn-b4w4UxoTfh9RxToo"
@@ -95,10 +95,23 @@ class Count(commands.Cog):
                             'avatar_url':avatar
                     }
                     response = requests.post(url=url,json=message)
-                
                     print(response.text)
+                
         except Exception as e:
             print(e)
 
+    @commands.Cog.listener()
+    async def on_raw_message_edit(self,event:discord.RawMessageUpdateEvent):
+        try:
+            with open('./data/count.json',mode='r',encoding='utf8') as f:
+                data = json.load(f)
+                id = event.message_id
+                channel = self.bot.get_channel(1290134122475425914)
+                msg = await channel.fetch_message(id)
+                if msg.id == data['msg']:
+                    await msg.delete()
+                
+        except Exception as e:
+            print(e)
 async def setup(bot):
     await bot.add_cog(Count(bot))
