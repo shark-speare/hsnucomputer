@@ -51,6 +51,7 @@ async def load_ext():
             print(f"Loaded {filename}")
     
 async def main():
+    discord.utils.setup_logging()
     await load_ext()
     await bot.start(os.getenv("token"))
 
