@@ -102,16 +102,17 @@ class Count(commands.Cog):
 
     @commands.Cog.listener()
     async def on_raw_message_edit(self,event:discord.RawMessageUpdateEvent):
-        try:
-            with open('./data/count.json',mode='r',encoding='utf8') as f:
-                data = json.load(f)
-                id = event.message_id
-                channel = self.bot.get_channel(1290134122475425914)
+        
+        with open('./data/count.json',mode='r',encoding='utf8') as f:
+            data = json.load(f)
+            id = event.message_id
+            channel = self.bot.get_channel(1290134122475425914)
+            try:
                 msg = await channel.fetch_message(id)
-                if msg.id == data['msg']:
-                    await msg.delete()
-                
-        except Exception as e:
-            print(e)
+            except Exception:
+                return
+            if msg.id == data['msg']:
+                await msg.delete()
+            
 async def setup(bot):
     await bot.add_cog(Count(bot))
