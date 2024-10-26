@@ -57,11 +57,8 @@ class Time(commands.Cog):
 
             minute = remaining//60
             remaining -= minute*60
-            content = f"第1節還剩下: {hour}小時{minute}分鐘{remaining}秒"
+            content = f"{hour}小時{minute}分鐘{remaining}秒"
 
-        else:
-            current = "下課時間"
-            content = "(非計時時段)"
 
         return (current,content) if content else "錯誤"
     
