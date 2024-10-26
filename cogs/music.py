@@ -58,7 +58,7 @@ class Music(commands.Cog):
             self.queue[interaction.guild.id].pop(0)
             
             #開播
-            source = discord.FFmpegPCMAudio(source=url,executable='./ffmpeg.exe')
+            source = discord.FFmpegPCMAudio(source=url,executable='./ffmpeg')
             voice:discord.VoiceClient = discord.utils.get(self.bot.voice_clients,guild=interaction.guild)
             voice.play(source,after=lambda _:self.bot.loop.create_task(self.play_next(interaction)))
             await interaction.followup.send(f'正在播放{info["title"]}')
