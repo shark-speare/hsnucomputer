@@ -5,3 +5,4 @@ feedparser
 requests
 python-dotenv
 pytubefix
+pytz
