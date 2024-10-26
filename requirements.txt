@@ -6,3 +6,4 @@ requests
 python-dotenv
 pytubefix
 pytz
+yt-dlp
