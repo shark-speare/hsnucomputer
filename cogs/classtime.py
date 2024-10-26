@@ -45,7 +45,7 @@ class Time(commands.Cog):
             remaining:timedelta = end-now
             content = f"{remaining.seconds//60}分鐘{remaining.seconds%60}秒"
         
-        elif now >= dt.strptime("17:00", "%H:%M").time():
+        elif now >= dt.strptime("17:00", "%H:%M").time() or now <= dt.strptime("08:10", "%H:%M").time():
             current = "非上課期間"
             
             now = dt.combine(date.today(),now)
@@ -60,7 +60,7 @@ class Time(commands.Cog):
             content = f"{hour}小時{minute}分鐘{remaining}秒"
 
 
-        return (current,content) if content else "錯誤"
+        return (current,content)
     
     @commands.Cog.listener()
     async def on_ready(self):
