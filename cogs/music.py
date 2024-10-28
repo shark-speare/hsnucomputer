@@ -52,6 +52,14 @@ class Music(commands.Cog):
 
     @app_commands.command(description='一次加入播放清單')
     async def add_playlist(self,interaction:discord.Interaction,網址):
+        # 確保機器人在語音頻道內
+        voice = await self.check_in_voice(interaction)
+        if voice == 0: return
+
+        # 將歌曲加入清單，如果清單不存在就創建
+        if interaction.guild.id not in self.queue:
+            self.queue[interaction.guild.id] = []
+        
         if 'playlist' not in 網址:
             await interaction.response.send_message('無效播放清單')
             return
@@ -65,7 +73,7 @@ class Music(commands.Cog):
             }
         )
 
-        await interaction.followup.send(f"{info['title']}已加入隊伍")
+        
 
         # 如果沒有在播放就開始播放
         if not voice.is_playing():
