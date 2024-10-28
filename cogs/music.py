@@ -13,7 +13,7 @@ class Music(commands.Cog):
             'username':'oauth',
             'password':'',
             "format": "bestaudio",
-            'noplaylist': True
+            'noplaylist': False
             })
         self.next = False
     
@@ -49,6 +49,28 @@ class Music(commands.Cog):
         # 如果沒有在播放就開始播放
         if not voice.is_playing():
             await self.play_next(interaction)
+
+    @app_commands.command(description='一次加入播放清單')
+    async def add_playlist(self,interaction:discord.Interaction,網址):
+        if 'playlist' not in 網址:
+            await interaction.response.send_message('無效播放清單')
+            return
+        await interaction.response.defer()
+        playlist = self.downloader.extract_info(網址,download=False)['entries']
+        for song in playlist:
+            self.queue[interaction.guild.id].append(
+            {
+                'title': song['title'],
+                'url': song['url']
+            }
+        )
+
+        await interaction.followup.send(f"{info['title']}已加入隊伍")
+
+        # 如果沒有在播放就開始播放
+        if not voice.is_playing():
+            await self.play_next(interaction)
+
 
     async def play_next(self,interaction:discord.Interaction):
         if len(self.queue[interaction.guild.id]) > 0:
