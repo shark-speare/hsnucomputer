@@ -164,7 +164,7 @@ class Music(commands.Cog):
     async def queue(self,interaction:discord.Interaction):
         await interaction.response.defer()
         if len(self.queue[interaction.guild.id]) == 0:
-            interaction.followup.send('隊列無音樂')
+            await interaction.followup.send('隊列無音樂')
             return
         queue_list = [song['title'] for song in self.queue[interaction.guild.id]]
         await interaction.followup.send("`" + "`\n`".join(queue_list)+"`")
