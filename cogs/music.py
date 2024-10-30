@@ -52,6 +52,7 @@ class Music(commands.Cog):
 
     @app_commands.command(description='一次加入播放清單')
     async def add_playlist(self,interaction:discord.Interaction,網址:str):
+    async def add_playlist(self,interaction:discord.Interaction,網址:str):
         # 確保機器人在語音頻道內
         voice = await self.check_in_voice(interaction)
         if voice == 0: return
