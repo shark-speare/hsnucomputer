@@ -106,7 +106,7 @@ class Music(commands.Cog):
         if not voice:
             user_voice = interaction.user.voice
             if not user_voice:
-                await interaction.response.send_message('請先加入一個語音頻道')
+                await interaction.followup.send('請先加入一個語音頻道')
                 return 0
             voice = await user_voice.channel.connect()
             voice:discord.VoiceClient = discord.utils.get(self.bot.voice_clients,guild=interaction.guild)
