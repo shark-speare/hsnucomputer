@@ -27,7 +27,7 @@ class Weather(commands.Cog):
             Choice(name="溫度", value='temp'),
             Choice(name="天氣", value='weather') 
          ])
-    async def weather(self, interaction:discord.Interaction, location:Choice[str], data:Choice[str]):
+    async def weather(self, interaction:discord.Interaction, 縣市:Choice[str], 資料:Choice[str]):
         # location是地點 data是想知道的資料
         await interaction.response.defer()
 
@@ -41,12 +41,12 @@ class Weather(commands.Cog):
 
         # 找到想要的地點
         for data_set in result:
-            if data_set['locationName'] == location.value:
+            if data_set['locationName'] == 縣市.value:
                 locationdata = data_set['weatherElement']
                 break
         
         # 分別把資料存進去date跟value裡面
-        if data.value == 'weather':
+        if 資料.value == 'weather':
             date = []
             value = []
             processing = locationdata[0]['time']
@@ -74,7 +74,7 @@ class Weather(commands.Cog):
             for i in range(len(maxt)):
                 value.append(f"{mint[i]} ~ {maxt[i]}℃")
 
-        embed = discord.Embed(title=f"{location.name}未來一周{data.name}",color=discord.Color.blue())
+        embed = discord.Embed(title=f"{縣市.name}未來一周{資料.name}",color=discord.Color.blue())
         embeds = []
         last = date[0][:5]
         for i in range(len(date)):
