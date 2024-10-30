@@ -15,5 +15,5 @@ class Homework(commands.Cog):
         await interaction.response.send_message(eval(formula1) + eval(formula2))
 
 async def setup(bot:commands.Bot):
-    bot.add_cog(Homework(bot))
+    await bot.add_cog(Homework(bot))
         
