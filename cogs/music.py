@@ -51,7 +51,7 @@ class Music(commands.Cog):
             await self.play_next(interaction)
 
     @app_commands.command(description='一次加入播放清單')
-    async def add_playlist(self,interaction:discord.Interaction,網址):
+    async def add_playlist(self,interaction:discord.Interaction,網址:str):
         # 確保機器人在語音頻道內
         voice = await self.check_in_voice(interaction)
         if voice == 0: return
@@ -159,12 +159,13 @@ class Music(commands.Cog):
 
         await voice.disconnect()
         await interaction.response.send_message('已離開語音頻道')
+        self.queue[interaction.guild.id] = []
 
     @app_commands.command(description='查看當前隊列')
     async def queue(self,interaction:discord.Interaction):
         await interaction.response.defer()
-        if len(self.queue[interaction.guild.id]) == 0:
-            interaction.followup.send('隊列無音樂')
+        if not self.queue.get(interaction.guild.id):
+            await interaction.followup.send('隊列無音樂')
             return
         queue_list = [song['title'] for song in self.queue[interaction.guild.id]]
         await interaction.followup.send("`" + "`\n`".join(queue_list)+"`")
