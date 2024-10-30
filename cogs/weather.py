@@ -15,7 +15,7 @@ class Weather(commands.Cog):
 
     @app_commands.command(description='查看各縣市一周天氣')
     @app_commands.choices(
-        location=[
+        縣市=[
         Choice(name=loc,value=loc) for loc in 
         ['臺北市', '新北市', '桃園市', '臺中市', 
          '臺南市', '高雄市', '基隆市', '新竹縣', 
@@ -23,7 +23,7 @@ class Weather(commands.Cog):
          '雲林縣', '嘉義縣', '嘉義市', '屏東縣', 
          '宜蘭縣', '花蓮縣', '臺東縣', '澎湖縣', 
          '金門縣', '連江縣']],
-        data=[
+        資料=[
             Choice(name="溫度", value='temp'),
             Choice(name="天氣", value='weather') 
          ])
