@@ -2,6 +2,7 @@ import discord
 from discord import app_commands
 from discord.ext import commands
 import json
+from datetime import datetime as dt
 
 class Sign(commands.Cog):
     def __init__(self,bot:commands.Bot):
@@ -72,9 +73,9 @@ class Sign(commands.Cog):
                 if day[輸入名字] != 1:
                         no_check.append(輸入名字)
             
-            
+            now = dt.now().strftime("%m/%d %X")
             if no_check:
-                await interaction.followup.send("\n".join(no_check)+"尚未簽到")
+                await interaction.followup.send(now+"\n"+"\n".join(no_check)+"尚未簽到")
             else:
                 await interaction.followup.send("全簽到完成")
         except Exception as e:
