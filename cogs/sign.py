@@ -3,6 +3,8 @@ from discord import app_commands
 from discord.ext import commands
 import json
 from datetime import datetime as dt
+from discord.app_commands import Choice
+from typing import Optional
 
 class Sign(commands.Cog):
     def __init__(self,bot:commands.Bot):
@@ -58,28 +60,30 @@ class Sign(commands.Cog):
 
     @app_commands.command(description="確認今日名單")
     @app_commands.checks.has_role("46屆幹部")
-    async def check(self,interaction:discord.Interaction):
-        try:
-            await interaction.response.defer(ephemeral=True)
-            all_data = open('./data/all.json',mode='r+',encoding='utf8')
-            all:dict = json.load(all_data)
+    @app_commands.choices(保留紀錄=[
+        Choice(name='是',value='True'),
+        Choice(name='否',value='False')
+        ])
+    async def check(self,interaction:discord.Interaction, 保留紀錄:Optional[Choice[str]]):
+        await interaction.response.defer(ephemeral=保留紀錄.value=='False')
+        all_data = open('./data/all.json',mode='r+',encoding='utf8')
+        all:dict = json.load(all_data)
 
-            day_data = open('./data/day.json',mode='r+',encoding='utf8')
-            day:dict = json.load(day_data)
+        day_data = open('./data/day.json',mode='r+',encoding='utf8')
+        day:dict = json.load(day_data)
 
-            no_check = []
-            
-            for 輸入名字 in all.keys():
-                if day[輸入名字] != 1:
-                        no_check.append(輸入名字)
-            
-            now = dt.now().strftime("%m/%d %X")
-            if no_check:
-                await interaction.followup.send(now+"\n"+"\n".join(no_check)+"尚未簽到")
-            else:
-                await interaction.followup.send("全簽到完成")
-        except Exception as e:
-            print(e)
+        no_check = []
+        
+        for 輸入名字 in all.keys():
+            if day[輸入名字] != 1:
+                    no_check.append(輸入名字)
+        
+        now = dt.now().strftime("%m/%d %X")
+        if no_check:
+            await interaction.followup.send(now+"\n"+"\n".join(no_check)+"尚未簽到")
+        else:
+            await interaction.followup.send("全簽到完成")
+        
         
     @app_commands.command(description="重設全部人名單")
     @app_commands.checks.has_role("46屆幹部")
