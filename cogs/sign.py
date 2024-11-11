@@ -64,7 +64,7 @@ class Sign(commands.Cog):
         Choice(name='是',value='True'),
         Choice(name='否',value='False')
         ])
-    async def check(self,interaction:discord.Interaction, 保留紀錄:Optional[Choice[str]]):
+    async def check(self,interaction:discord.Interaction, 保留紀錄:Choice[str]):
         await interaction.response.defer(ephemeral=保留紀錄.value=='False')
         all_data = open('./data/all.json',mode='r+',encoding='utf8')
         all:dict = json.load(all_data)
