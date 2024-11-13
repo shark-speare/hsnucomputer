@@ -29,7 +29,11 @@ class Sign(commands.Cog):
             await interaction.followup.send('這個名字不在點名名單內')
             return
         
-        day[輸入名字] = 1
+        if interaction.user.id in day.values():
+            await interaction.followup.send('你已經點名過了')
+            return
+        
+        day[輸入名字] = interaction.user.id
 
         day_data.seek(0)
         day_data.truncate()
@@ -75,7 +79,7 @@ class Sign(commands.Cog):
         no_check = []
         
         for 輸入名字 in all.keys():
-            if day[輸入名字] != 1:
+            if day[輸入名字] == 0:
                     no_check.append(輸入名字)
         
         now = dt.now().strftime("%m/%d %X")
@@ -111,6 +115,11 @@ class Sign(commands.Cog):
     async def keyword(self,interaction:discord.Interaction,keyword:str):
         self.keyword = keyword
         await interaction.response.send_message(f'今日關鍵字設定為{keyword}',ephemeral=True)
+
+    @app_commands.command(description='設定今日關鍵字')
+    @app_commands.checks.has_role("46屆幹部")
+    async def see_keyword(self,interaction:discord.Interaction):
+        await interaction.response.send_message(f'今日關鍵字為{self.keyword}',ephemeral=True)
 
 async def setup(bot):
     await bot.add_cog(Sign(bot))
