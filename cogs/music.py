@@ -2,7 +2,7 @@ import discord
 from discord import app_commands
 from discord.ext import commands
 from yt_dlp import YoutubeDL
-from typing import Optional
+from typing import Optional, Union
 
 
 
@@ -101,7 +101,7 @@ class Music(commands.Cog):
             else:
                 self.next = False
     
-    async def check_in_voice(self,interaction:discord.Interaction) -> discord.VoiceClient|int: 
+    async def check_in_voice(self,interaction:discord.Interaction): 
         voice:Optional[discord.VoiceClient] = discord.utils.get(self.bot.voice_clients,guild=interaction.guild)
         if not voice:
             user_voice = interaction.user.voice
