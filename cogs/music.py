@@ -9,12 +9,7 @@ from typing import Optional, Union
 class Music(commands.Cog):
     def __init__(self,bot:commands.Bot):
         self.bot = bot
-        self.downloader = YoutubeDL({
-            'username':'oauth',
-            # 'password':'',
-            "format": "bestaudio",
-            'noplaylist': False
-            })
+        self.downloader = YoutubeDL()
         self.next = False
     
         self.queue = {int:list}
