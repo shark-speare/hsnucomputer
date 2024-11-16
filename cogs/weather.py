@@ -7,8 +7,6 @@ import requests
 import os
 from discord.app_commands import Choice
 from datetime import datetime as dt
-import locale
-locale.setlocale(locale.LC_TIME,'zh_TW.UTF-8')
 
 class Weather(commands.Cog):
     def __init__(self,bot:commands.Bot):
