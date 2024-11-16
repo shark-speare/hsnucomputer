@@ -16,12 +16,16 @@ class Weather(commands.Cog):
         self.key = {'Authorization':os.environ['weather']}
         self.url = 'https://opendata.cwa.gov.tw/linked/graphql'
 
-    @app_commands.command(description='查看臺北市一周天氣')
-    async def weather(self, interaction:discord.Interaction):
+    @app_commands.command(description='查看臺北市/新北市一周天氣')
+    @app_commands.choices(縣市=[
+        Choice(name='臺北市',value='臺北市'),
+        Choice(name='新北市',value='新北市')
+    ])
+    async def weather(self, interaction:discord.Interaction, 縣市:Choice[str]):
         # location是地點 data是想知道的資料
         await interaction.response.defer()
 
-        data = self.extract_info()
+        data = self.extract_info(縣市.value)
 
         embed_list = []
 
@@ -34,11 +38,11 @@ class Weather(commands.Cog):
         await interaction.followup.send(embeds=embed_list)
 
 
-    def extract_info(self) -> list[dict]:
+    def extract_info(self,location) -> list[dict]:
         query = """
 query forecast {
   forecast {
-    locations(locationName: "臺北市") {
+    locations(locationName: "place") {
       locationName,
       WeatherDescription {
         timePeriods {
@@ -49,7 +53,7 @@ query forecast {
     }
   }
 }
-"""
+""".replace('place',location)
 
         response = requests.post(url=self.url,params=self.key,json={'query':query}).json()
         periods = response['data']['forecast']['locations'][0]['WeatherDescription']['timePeriods']
