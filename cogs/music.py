@@ -10,7 +10,7 @@ class Music(commands.Cog):
     def __init__(self,bot:commands.Bot):
         self.bot = bot
         self.downloader = YoutubeDL({
-            # 'username':'oauth',
+            'username':'oauth',
             # 'password':'',
             "format": "bestaudio",
             'noplaylist': False
