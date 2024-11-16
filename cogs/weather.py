@@ -28,7 +28,7 @@ class Weather(commands.Cog):
         embed_list = []
 
         for i in range(7):
-            embed = discord.Embed(title="臺北市一週天氣預報" if i==0 else None,color=discord.Color.blue())
+            embed = discord.Embed(title=f"{縣市.value}一週天氣預報" if i==0 else None,color=discord.Color.blue())
             embed.add_field(name=data[i]['date'], value=data[i]['des'])
 
             embed_list.append(embed)
