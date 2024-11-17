@@ -1,1 +1,101 @@
-{}
+{
+    "561451790143586345": {
+        "status": {
+            "doing": "",
+            "workStartTimestamp": "2024-11-17T15:49:41.380316+08:00"
+        },
+        "asset": {
+            "money": 0
+        }
+    },
+    "966307667943510026": {
+        "status": {
+            "doing": "",
+            "workStartTimestamp": "2024-11-17T20:32:22.079473+08:00"
+        },
+        "asset": {
+            "money": 280
+        }
+    },
+    "1130318688956989490": {
+        "status": {
+            "doing": "",
+            "workStartTimestamp": "2024-11-17T20:26:11.217283+08:00"
+        },
+        "asset": {
+            "money": 98
+        }
+    },
+    "1259871271290802278": {
+        "status": {
+            "doing": "",
+            "workStartTimestamp": "2024-11-17T16:56:26.306446+08:00"
+        },
+        "asset": {
+            "money": 0
+        }
+    },
+    "893303476740841502": {
+        "status": {
+            "doing": "",
+            "workStartTimestamp": "2024-11-17T19:40:44.596217+08:00"
+        },
+        "asset": {
+            "money": 0
+        }
+    },
+    "1036502809979387965": {
+        "status": {
+            "doing": "",
+            "workStartTimestamp": "2024-11-17T18:30:22.500088+08:00"
+        },
+        "asset": {
+            "money": 81
+        }
+    },
+    "856764007235059743": {
+        "status": {
+            "doing": "",
+            "workStartTimestamp": "2024-11-17T20:33:12.505906+08:00"
+        },
+        "asset": {
+            "money": 124
+        }
+    },
+    "972012151264915467": {
+        "status": {
+            "doing": "",
+            "workStartTimestamp": "2024-11-17T20:44:08.042398+08:00"
+        },
+        "asset": {
+            "money": 370
+        }
+    },
+    "690881902684667904": {
+        "status": {
+            "doing": "",
+            "workStartTimestamp": "2024-11-17T17:33:09.553298+08:00"
+        },
+        "asset": {
+            "money": 0
+        }
+    },
+    "569309543297843214": {
+        "status": {
+            "doing": "",
+            "workStartTimestamp": "2024-11-17T19:40:35.536565+08:00"
+        },
+        "asset": {
+            "money": 275
+        }
+    },
+    "922456908491800576": {
+        "status": {
+            "doing": "",
+            "workStartTimestamp": "2024-11-17T18:20:42.860102+08:00"
+        },
+        "asset": {
+            "money": 68
+        }
+    }
+}
