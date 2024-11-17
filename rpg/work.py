@@ -29,6 +29,7 @@ class Work(commands.Cog):
 
         else:
             player_json_data[id]['status']['workStartTimestamp'] = dt.now(tz=self.tz).isoformat()
+            player_json_data[id]['status']['doing'] = '工作'
             player_json_data.seek(0)
             player_json_data.truncate()
             json.dump(player_json_data, player_data, ensure_ascii=False, indent=4)
