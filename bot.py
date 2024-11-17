@@ -49,6 +49,11 @@ async def load_ext():
         if filename.endswith(".py") and not filename.startswith("_"):
             await bot.load_extension(f"cogs.{filename[:-3]}")
             print(f"Loaded {filename}")
+
+    for filename in os.listdir("./eco"):
+        if filename.endswith(".py") and not filename.startswith("_"):
+            await bot.load_extension(f"eco.{filename[:-3]}")
+            print(f"Loaded {filename}")
     
 async def main():
     discord.utils.setup_logging()
