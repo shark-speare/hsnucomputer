@@ -43,7 +43,7 @@ class Work(commands.Cog):
         player_data = open('rpgdata/playerData.json', mode='r+', encoding='utf8')
         player_json_data:dict = json.load(player_data)
 
-        workStartTimestamp = dt.fromisoformat(player_json_data[id]['workStartTimestamp'])
+        workStartTimestamp = dt.fromisoformat(player_json_data[id]['status']['workStartTimestamp'])
         workingTime = (dt.now(tz=self.tz)-workStartTimestamp).seconds
         #工作時長不足
         if workingTime <= 1800:
@@ -52,8 +52,8 @@ class Work(commands.Cog):
             money = random.randint(25,75)
             player_json_data[id]['asset']['money'] += money
             player_json_data[id]['status']['doing'] = ""
-            player_json_data.seek(0)
-            player_json_data.truncate()
+            player_data.seek(0)
+            player_data.truncate()
             json.dump(player_json_data, player_data, ensure_ascii=False, indent=4)
             
             await interaction.followup.send(f'此輪工作獲得{money}')

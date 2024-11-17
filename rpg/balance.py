@@ -15,10 +15,10 @@ class Balance(commands.Cog):
         name = 欲查看的使用者.display_name if 欲查看的使用者 else interaction.user.display_name
         id = str(欲查看的使用者.id) if 欲查看的使用者 else str(interaction.user.id)
         
-        file = open('ecodata/money.json',mode='r',encoding='utf8')
+        file = open('rpgdata/playerData.json',mode='r',encoding='utf8')
         data :dict= json.load(file)
 
-        balance = data.get(id) if data.get(id) else 0
+        balance = data.get(id).get('asset').get('money') if data.get(id) else 0
 
         await interaction.followup.send(f'{name}\n🪙餘額為{balance}')
 
