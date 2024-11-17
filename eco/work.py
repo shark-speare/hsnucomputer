@@ -29,7 +29,7 @@ class Work(commands.Cog):
             work_file.seek(0)
             work_file.truncate()
             json.dump(work_data, work_file, ensure_ascii=False, indent=4)
-            await interaction.followup.send('開始工作\n1小時後可領取薪水')
+            await interaction.followup.send('開始工作\n30分鐘後可領取薪水')
 
         else:
             time = dt.fromisoformat(time_str)
