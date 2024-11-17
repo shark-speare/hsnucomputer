@@ -19,12 +19,12 @@ class Work(commands.Cog):
         player_data = open('rpgdata/playerData.json', mode='r+', encoding='utf8')
         player_json_data:dict = json.load(player_data)
 
-        if id not in player_json_data.keys():
+        if id not in player_json_data.keys(): # 創建玩家資料
             with open('rpgdata/template.json', mode='r', encoding='utf8') as file:
                 template:dict = json.load(file)
             player_json_data[id] = template
 
-        if player_json_data[id]['doing']:
+        if player_json_data[id]['doing']: # 判斷是否有空閒時間
             await interaction.followup.send(f'你正在{player_json_data[id]["doing"]}')
 
         else:
