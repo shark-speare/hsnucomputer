@@ -24,11 +24,11 @@ class Work(commands.Cog):
                 template:dict = json.load(file)
             player_json_data[id] = template
 
-        if player_json_data[id]['doing']: # 判斷是否有空閒時間
+        if player_json_data[id]['status']['doing']: # 判斷是否有空閒時間
             await interaction.followup.send(f'你正在{player_json_data[id]["doing"]}')
 
         else:
-            player_json_data[id]['workStartTimestamp'] = dt.now(tz=self.tz).isoformat()
+            player_json_data[id]['status']['workStartTimestamp'] = dt.now(tz=self.tz).isoformat()
             player_json_data.seek(0)
             player_json_data.truncate()
             json.dump(player_json_data, player_data, ensure_ascii=False, indent=4)
@@ -49,7 +49,7 @@ class Work(commands.Cog):
             await interaction.followup.send('工作時長不足半小時')
         else:
             money = random.randint(25,75)
-            player_json_data[id]['money'] += money
+            player_json_data[id]['status']['money'] += money
             player_json_data.seek(0)
             player_json_data.truncate()
             json.dump(player_json_data, player_data, ensure_ascii=False, indent=4)
