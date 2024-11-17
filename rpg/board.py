@@ -21,7 +21,6 @@ class Leader(commands.Cog):
         embed_list = [discord.Embed(title='🪙餘額前5名',color=discord.Color.yellow())]
 
         for i in range(5):
-            print(rank[i][0])
             member = self.bot.get_user(int(rank[i][0]))
             embed = discord.Embed(
                 title=member.display_name,
