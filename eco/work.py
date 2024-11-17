@@ -56,7 +56,7 @@ class Work(commands.Cog):
                 money_file.truncate()
                 json.dump(money_data, money_file, ensure_ascii=False, indent=4)
                 
-                await interaction.followup.send(f'此輪工作獲得{money}\n開始下一輪工作')
+                await interaction.followup.send(f'此輪工作獲得{money}\n開始下一輪工作\n30分鐘後可領取薪水')
 
 async def setup(bot):
     await bot.add_cog(Work(bot))
