@@ -11,7 +11,7 @@ class Work(commands.Cog):
         self.bot = bot
         self.tz = timezone(timedelta(hours=8))
 
-    @app_commands.command(description='🪙每小時可獲取50~100')
+    @app_commands.command(description='🪙每半小時可獲取50~100')
     async def work(self, interaction:discord.Interaction):
         await interaction.response.defer()
         id = str(interaction.user.id)
@@ -34,10 +34,10 @@ class Work(commands.Cog):
         else:
             time = dt.fromisoformat(time_str)
             #工作時長不足
-            if (dt.now(tz=self.tz)-time).seconds <= 3600:
+            if (dt.now(tz=self.tz)-time).seconds <= 1800:
                 await interaction.followup.send('工作時長不足1小時')
             else:
-                money = random.randint(50,100)
+                money = random.randint(25,75)
 
                 money_file = open('ecodata/money.json', mode='r+', encoding='utf8')
                 money_data:dict = json.load(money_file)
