@@ -1,7 +1,9 @@
 {
     "status": {
         "doing": "",
-        "money": 0,
         "workStartTimestamp": 0
+    },
+    "asset": {
+        "money": 0
     }
 }

@@ -49,7 +49,7 @@ class Work(commands.Cog):
             await interaction.followup.send('工作時長不足半小時')
         else:
             money = random.randint(25,75)
-            player_json_data[id]['status']['money'] += money
+            player_json_data[id]['asset']['money'] += money
             player_json_data.seek(0)
             player_json_data.truncate()
             json.dump(player_json_data, player_data, ensure_ascii=False, indent=4)

@@ -11,13 +11,13 @@ class Leader(commands.Cog):
     async def leaderboard(self,interaction:discord.Interaction):
         await interaction.response.defer()
 
-        data:dict = json.load(open('ecodata/money.json',mode='r',encoding='utf8'))
+        data:dict = json.load(open('rpgdata/playerData.json',mode='r',encoding='utf8'))
 
         if len(data.items()) <= 6:
             await interaction.followup.send('資料不足5人')
             return
         
-        rank = sorted(data.items(), key=lambda item: item[1])
+        rank = sorted(data.items(), key=lambda player: player['asset']['money'], reverse=True)
         embed_list = [discord.Embed(title='🪙餘額前5名')]
 
         for i in range(5):
