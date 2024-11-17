@@ -35,7 +35,7 @@ class Work(commands.Cog):
             time = dt.fromisoformat(time_str)
             #工作時長不足
             if (dt.now(tz=self.tz)-time).seconds <= 1800:
-                await interaction.followup.send('工作時長不足1小時')
+                await interaction.followup.send('工作時長不足半小時')
             else:
                 money = random.randint(25,75)
 
