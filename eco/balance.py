@@ -9,11 +9,11 @@ class Balance(commands.Cog):
         self.bot = bot
 
     @app_commands.command(description='🪙查看餘額')
-    async def balance(self,interaction:discord.Interaction,user:Optional[discord.User]):
+    async def balance(self,interaction:discord.Interaction,欲查看的使用者:Optional[discord.User]):
         await interaction.response.defer()
         
-        name = user.display_name if user else interaction.user.display_name
-        id = str(user.id) if user else str(interaction.user.id)
+        name = 欲查看的使用者.display_name if 欲查看的使用者 else interaction.user.display_name
+        id = str(欲查看的使用者.id) if 欲查看的使用者 else str(interaction.user.id)
         
         file = open('ecodata/money.json',mode='r',encoding='utf8')
         data :dict= json.load(file)
