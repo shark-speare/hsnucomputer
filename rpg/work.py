@@ -30,8 +30,8 @@ class Work(commands.Cog):
         else:
             player_json_data[id]['status']['workStartTimestamp'] = dt.now(tz=self.tz).isoformat()
             player_json_data[id]['status']['doing'] = '工作'
-            player_json_data.seek(0)
-            player_json_data.truncate()
+            player_data.seek(0)
+            player_data.truncate()
             json.dump(player_json_data, player_data, ensure_ascii=False, indent=4)
             await interaction.followup.send('開始工作\n30 分鐘後可領取薪水')
 

@@ -52,7 +52,7 @@ async def load_ext():
 
     for filename in os.listdir("./rpg"):
         if filename.endswith(".py") and not filename.startswith("_"):
-            await bot.load_extension(f"eco.{filename[:-3]}")
+            await bot.load_extension(f"rpg.{filename[:-3]}")
             print(f"Loaded {filename}")
     
 async def main():
