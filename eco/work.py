@@ -11,7 +11,7 @@ class Work(commands.Cog):
         self.bot = bot
         self.tz = timezone(timedelta(hours=8))
 
-    @app_commands.command(description='每小時可獲取50~100🪙')
+    @app_commands.command(description='🪙每小時可獲取50~100')
     async def work(self, interaction:discord.Interaction):
         await interaction.response.defer()
         id = str(interaction.user.id)
