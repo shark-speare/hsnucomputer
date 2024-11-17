@@ -25,7 +25,7 @@ class Work(commands.Cog):
             player_json_data[id] = template
 
         if player_json_data[id]['status']['doing']: # 判斷是否有空閒時間
-            await interaction.followup.send(f'你正在{player_json_data[id]["doing"]}')
+            await interaction.followup.send(f'你正在{player_json_data[id]["status"]["doing"]}')
 
         else:
             player_json_data[id]['status']['workStartTimestamp'] = dt.now(tz=self.tz).isoformat()
@@ -51,6 +51,7 @@ class Work(commands.Cog):
         else:
             money = random.randint(25,75)
             player_json_data[id]['asset']['money'] += money
+            player_json_data[id]['status']['doing'] = ""
             player_json_data.seek(0)
             player_json_data.truncate()
             json.dump(player_json_data, player_data, ensure_ascii=False, indent=4)
