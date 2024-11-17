@@ -17,14 +17,14 @@ class Leader(commands.Cog):
             await interaction.followup.send('資料不足5人')
             return
         
-        rank = sorted(data.items(), key=lambda player: player['asset']['money'], reverse=True)
+        rank = sorted(data.items(), key=lambda player: player[1]['asset']['money'], reverse=True)
         embed_list = [discord.Embed(title='🪙餘額前5名')]
 
         for i in range(5):
             member = interaction.guild.get_member(rank[i][0])
             embed = discord.Embed(
                 title=member.display_name,
-                description=f'🪙{rank[i][1]}'
+                description=f"🪙{rank[i][1]['asset']['money']}"
                 )
             embed.thumbnail = member.display_avatar.url
 
