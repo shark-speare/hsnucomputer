@@ -18,15 +18,16 @@ class Leader(commands.Cog):
             return
         
         rank = sorted(data.items(), key=lambda player: player[1]['asset']['money'], reverse=True)
-        embed_list = [discord.Embed(title='🪙餘額前5名')]
+        embed_list = [discord.Embed(title='🪙餘額前5名',color=discord.Color.yellow())]
 
         for i in range(5):
-            member = interaction.guild.get_member(rank[i][0])
+            print(rank[i][0])
+            member = self.bot.get_user(int(rank[i][0]))
             embed = discord.Embed(
                 title=member.display_name,
                 description=f"🪙{rank[i][1]['asset']['money']}"
                 )
-            embed.thumbnail = member.display_avatar.url
+            embed.set_thumbnail(url=member.display_avatar.url)
 
             embed_list.append(embed)
 
