@@ -34,4 +34,5 @@ class Leader(commands.Cog):
         await interaction.followup.send(embeds=embed_list)
 
 async def setup(bot):
-    await bot.add_cog(Leader(bot))
+    if "Leader" not in bot.cogs:
+        await bot.add_cog(Leader(bot))
