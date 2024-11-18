@@ -3,37 +3,42 @@ from discord import app_commands
 from discord.ext import commands
 import json
 
-class Leader(commands.Cog):
+class Pay(commands.Cog):
     def __init__(self,bot:commands.Bot):
         self.bot = bot
 
-    @app_commands.command(description='🪙查看金額排行前5')
-    async def leaderboard(self,interaction:discord.Interaction):
+    @app_commands.command(description='🪙轉帳')
+    async def pay(self,interaction:discord.Interaction,aabb:discord.Member,amount:int):
         await interaction.response.defer()
 
-        data:dict = json.load(open('rpgdata/playerData.json',mode='r',encoding='utf8'))
+        player_data = open('rpgdata/playerData.json', mode='r+', encoding='utf8')
+        player_json_data:dict = json.load(player_data)
 
-        if len(data.items()) <= 6:
-            await interaction.followup.send('資料不足5人')
+        id = str(interaction.user.id)
+        target_id = str(aabb.id)
+
+        if id not in player_json_data.keys(): # 創建玩家資料
+            with open('rpgdata/template.json', mode='r', encoding='utf8') as file:
+                template:dict = json.load(file)
+            player_json_data[id] = template
+
+        if target_id not in player_json_data.keys(): # 創建目標玩家資料
+            with open('rpgdata/template.json', mode='r', encoding='utf8') as file:
+                template:dict = json.load(file)
+            player_json_data[target_id] = template
+
+        if player_json_data[id]['asset']['money'] < amount: # 存款不足
+            await interaction.followup.send(f"存款不足，你的餘額為{player_json_data[id]['asset']['money']}")
             return
         
-        rank = sorted(data.items(), key=lambda player: player[1]['asset']['money'], reverse=True)
-        embed_list = [discord.Embed(title='🪙餘額前5名',color=discord.Color.yellow())]
+        player_json_data[id]['asset']['money'] -= amount
+        player_json_data[target_id]['asset']['money'] += amount
 
-        for i in range(5):
-            print(rank[i][0])
-            member = self.bot.get_user(int(rank[i][0]))
-            embed = discord.Embed(
-                title=member.display_name,
-                description=f"🪙{rank[i][1]['asset']['money']}"
-                )
-            embed.set_thumbnail(url=member.display_avatar.url)
+        player_data.seek(0)
+        player_data.truncate()
+        json.dump(player_json_data, player_data, ensure_ascii=False, indent=4)
 
-            embed_list.append(embed)
-
-        await interaction.followup.send(embeds=embed_list)
+        await interaction.followup.send(f"轉帳成功，你的餘額為{player_json_data[id]['asset']['money']}")
 
 async def setup(bot):
-    if "Leader" not in bot.cogs:
-        await bot.add_cog(Leader(bot))
-
+    await bot.add_cog(Pay(bot))
