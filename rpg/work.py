@@ -11,22 +11,6 @@ class Work(commands.Cog):
         self.bot = bot
         self.tz = timezone(timedelta(hours=8))
 
-    @app_commands.command(description='工作招募')
-    async def showworks(self, interaction:discord.Interaction):
-        await interaction.response.defer()
-        with open('rpgdata/works.json', mode='r', encoding='utf8') as file:
-            works:dict = json.load(file)
-        works_str = ""
-        for work in works:
-            works_str += \
-f'## {work["name"]} (ID: {work["id"]})\n \
-{work["description"]}\n \
-報酬：{work["reward"][0]}~{work["reward"][1]}\n \
-工作時間：{work["time"][0]}~{work["time"][1]}秒\n \
-超時倍率：{work["overTimeRewardRatio"]}\n \
-**Work Glorifies God!**\n\n'
-        await interaction.followup.send(works_str)
-
     @app_commands.command(description='🪙輸入工作 ID 開始工作')
     async def work(self, interaction:discord.Interaction, work_id: str):
         await interaction.response.defer()

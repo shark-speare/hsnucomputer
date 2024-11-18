@@ -3,8 +3,24 @@
         "id": "work1",
         "name": "拔草",
         "description": "小鎮的草太長了，請幫忙拔掉。維護小鎮環境，人人有責！！",
-        "reward": [50, 150],
+        "reward": [30, 100],
         "time": [1800, 3600],
-        "overTimeRewardRatio": 0.5
+        "overTimeRewardRatio": 0.8
+    },
+    "work2": {
+        "id": "work2",
+        "name": "釣魚",
+        "description": "居民們的肚子，由你來守護！！生鮮食品要盡快處理喔！",
+        "time": [3000, 3600],
+        "reward": [80, 200],
+        "overTimeRewardRatio": 0.35
+    },
+    "work3": {
+        "id": "work3",
+        "name": "摸魚",
+        "description": "不能摸魚！被發現就不好了:(",
+        "reward": [0, 70],
+        "time": [600, 610],
+        "overTimeRewardRatio": -1.8
     }
 }
