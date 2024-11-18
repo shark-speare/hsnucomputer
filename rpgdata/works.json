@@ -1,0 +1,10 @@
+{
+    "work1": {
+        "id": "work1",
+        "name": "拔草",
+        "description": "小鎮的草太長了，請幫忙拔掉。維護小鎮環境，人人有責！！",
+        "reward": [50, 150],
+        "time": [1800, 3600],
+        "overTimeRewardRatio": 0.5
+    }
+}
