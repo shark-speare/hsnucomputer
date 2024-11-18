@@ -22,7 +22,7 @@ class Work(commands.Cog):
 f'## {work["name"]} (ID: {work["id"]})\n \
 {work["description"]}\n \
 報酬：{work["reward"][0]}~{work["reward"][1]}\n \
-工作時間：{work["time"]}秒\n \
+工作時間：{work["time"][0]}~{work["time"][1]}秒\n \
 超時倍率：{work["overTimeRewardRatio"]}\n \
 **Work Glorifies God!**\n\n'
         await interaction.followup.send(works_str)
