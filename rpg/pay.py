@@ -8,14 +8,14 @@ class Pay(commands.Cog):
         self.bot = bot
 
     @app_commands.command(description='🪙轉帳')
-    async def pay(self,interaction:discord.Interaction,aabb:discord.Member,amount:int):
+    async def pay(self,interaction:discord.Interaction,轉帳對象:discord.Member,金額:int):
         await interaction.response.defer()
 
         player_data = open('rpgdata/playerData.json', mode='r+', encoding='utf8')
         player_json_data:dict = json.load(player_data)
 
         id = str(interaction.user.id)
-        target_id = str(aabb.id)
+        target_id = str(轉帳對象.id)
 
         if id not in player_json_data.keys(): # 創建玩家資料
             with open('rpgdata/template.json', mode='r', encoding='utf8') as file:
@@ -27,12 +27,12 @@ class Pay(commands.Cog):
                 template:dict = json.load(file)
             player_json_data[target_id] = template
 
-        if player_json_data[id]['asset']['money'] < amount: # 存款不足
+        if player_json_data[id]['asset']['money'] < 金額: # 存款不足
             await interaction.followup.send(f"存款不足，你的餘額為{player_json_data[id]['asset']['money']}")
             return
         
-        player_json_data[id]['asset']['money'] -= amount
-        player_json_data[target_id]['asset']['money'] += amount
+        player_json_data[id]['asset']['money'] -= 金額
+        player_json_data[target_id]['asset']['money'] += 金額
 
         player_data.seek(0)
         player_data.truncate()
