@@ -35,7 +35,7 @@ class Work(commands.Cog):
             json.dump(player_json_data, player_data, ensure_ascii=False, indent=4)
             await interaction.followup.send('開始工作\n30 分鐘後可領取薪水')
 
-    @app_commands.command(description='停止工作、領取薪水')
+    @app_commands.command(description='🪙停止工作、領取薪水')
     async def stopwork(self, interaction:discord.Interaction):
         await interaction.response.defer()
         id = str(interaction.user.id)
