@@ -36,3 +36,4 @@ class Leader(commands.Cog):
 async def setup(bot):
     if "Leader" not in bot.cogs:
         await bot.add_cog(Leader(bot))
+
