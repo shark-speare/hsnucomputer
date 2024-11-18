@@ -84,6 +84,7 @@ f'## {work["name"]} (ID: {work["id"]})\n \
                 money = int(money)
             player_json_data[user_id]['asset']['money'] += money
             player_json_data[user_id]['status']['doing'] = ""
+            player_json_data[user_id]['status']['workStartTimestamp'] = ""
             player_data.seek(0)
             player_data.truncate()
             json.dump(player_json_data, player_data, ensure_ascii=False, indent=4)
