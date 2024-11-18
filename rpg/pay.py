@@ -31,6 +31,10 @@ class Pay(commands.Cog):
             await interaction.followup.send(f"存款不足，你的餘額為{player_json_data[id]['asset']['money']}")
             return
         
+        if 金額 <= 0:
+            await interaction.followup.send(f"請輸入大於0的數字")
+            return
+        
         player_json_data[id]['asset']['money'] -= 金額
         player_json_data[target_id]['asset']['money'] += 金額
 
