@@ -50,7 +50,7 @@ class WorkView(View):
 
         await interaction.response.send_message(content=
             f"""
-## {work['name']}
+## {work['name']} ({work['id']})
 工作時長: {work['time'][0]}秒~{work['time'][1]}秒
 薪水: {work['reward'][0]} ~ {work['reward'][1]} 🪙
 超時倍率: {work['overTimeRewardRatio']}

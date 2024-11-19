@@ -56,7 +56,7 @@ class Work(commands.Cog):
         workStartTimestamp = dt.fromisoformat(player_json_data[user_id]['status']['workStartTimestamp'])
         workingTime = (dt.now(tz=self.tz)-workStartTimestamp).seconds
         #工作時長不足
-        if workingTime < work['time'][0]:
+        if workingTime < work['time'][0] or player_data[user_id]['status'].get('workStartTimestamp'):
             await interaction.followup.send('工作時長不足')
         
         else:
