@@ -5,5 +5,8 @@
     },
     "asset": {
         "money": 0
+    },
+    "bag": {
+        "items": {}
     }
 }
