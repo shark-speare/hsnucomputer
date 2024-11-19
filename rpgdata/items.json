@@ -3,5 +3,16 @@
         "id": "item-test_item",
         "name": "Test Item",
         "description": "This is a test item."
+    },
+    "item-weed": {
+        "id": "item-weed",
+        "name": "小草",
+        "description": "一株小草，似乎不怎麼值錢。"
+    },
+    "item-worm": {
+        "id": "item-worm",
+        "name": "蟲子",
+        "description": "一條蟲子，看起來很噁心。"
     }
+
 }

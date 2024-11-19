@@ -67,8 +67,7 @@ class Work(commands.Cog):
 
         workStartTimestamp = dt.fromisoformat(player_json_data[user_id]['status']['workStartTimestamp'])
         workingTime = (dt.now(tz=self.tz)-workStartTimestamp).seconds
-        print(workingTime)
-        print(work['time'][0])
+
         #工作時長不足
         if workingTime < work['time'][0]:
             await interaction.followup.send('工作時長不足')
@@ -80,6 +79,18 @@ class Work(commands.Cog):
                 work_compelete_message = '工作超時！你很累，雇主不開心 :(\n'
                 money *= work['overTimeRewardRatio']
                 money = int(money)
+            with open('rpgdata/items.json', mode='r', encoding='utf8') as file:
+                items_id_table:dict = json.load(file)
+            for drop_item_id in work['drops'].keys():
+                drop = work['drops'][drop_item_id]
+                if random.random() < drop['probability']:
+                    amount = random.randint(drop['amount'][0], drop['amount'][1])
+                    if amount:
+                        if drop_item_id not in player_json_data[user_id]['bag']['items'].keys():
+                            player_json_data[user_id]['bag']['items'][drop_item_id] = amount
+                        else:
+                            player_json_data[user_id]['bag']['items'][drop_item_id] += amount
+                        work_compelete_message += f'你意外的獲得了 {amount} 個 {items_id_table[drop_item_id]["name"]}！\n'
             player_json_data[user_id]['asset']['money'] += money
             player_json_data[user_id]['status']['doing'] = ""
             player_json_data[user_id]['status']['workStartTimestamp'] = ""

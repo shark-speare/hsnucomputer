@@ -74,14 +74,16 @@
     "690881902684667904": {
         "status": {
             "doing": "",
-            "workStartTimestamp": "2024-11-17T17:33:09.553298+08:00"
+            "workStartTimestamp": ""
         },
         "asset": {
-            "money": 0
+            "money": 809
         },
         "bag": {
             "items": {
-                "item-test_item": 1
+                "item-test_item": 1,
+                "item-weed": 8,
+                "item-worm": 5
             }
         }
     },
