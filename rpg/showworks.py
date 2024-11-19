@@ -48,7 +48,7 @@ class WorkView(View):
 
         work = get_works()[1][select.values[0]]
 
-        await interaction.response.send_message(content=
+        await interaction.response.edit_message(content=
             f"""
 ## {work['name']} ({work['id']})
 工作時長: {work['time'][0]}秒~{work['time'][1]}秒
