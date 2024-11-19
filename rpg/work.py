@@ -1,10 +1,15 @@
 import discord
 from discord import app_commands
+from discord.app_commands import Choice
 import json
 from discord.ext import commands
 from datetime import datetime as dt
 from datetime import timezone, timedelta
 import random
+
+def get_work_list():
+    works:dict = json.load(open('rpgdata/works.json',mode='r',encoding='utf8'))
+    return works.keys()
 
 class Work(commands.Cog):
     def __init__(self,bot:commands.Bot):
@@ -12,9 +17,13 @@ class Work(commands.Cog):
         self.tz = timezone(timedelta(hours=8))
 
     @app_commands.command(description='🪙輸入工作 ID 開始工作')
-    async def work(self, interaction:discord.Interaction, work_id: str):
+    @app_commands.choices(工作=[
+        Choice(name=key, value=key) for key in get_work_list()
+    ])
+    async def work(self, interaction:discord.Interaction, 工作: Choice[str]):
         await interaction.response.defer()
         user_id = str(interaction.user.id)
+        work_id = 工作.value
 
         player_data = open('rpgdata/playerData.json', mode='r+', encoding='utf8')
         player_json_data:dict = json.load(player_data)

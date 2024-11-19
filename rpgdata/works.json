@@ -1,22 +1,22 @@
 {
-    "work1": {
-        "id": "work1",
+    "weed": {
+        "id": "weed",
         "name": "拔草",
         "description": "小鎮的草太長了，請幫忙拔掉。維護小鎮環境，人人有責！！",
         "reward": [30, 100],
         "time": [1800, 3600],
         "overTimeRewardRatio": 0.8
     },
-    "work2": {
-        "id": "work2",
+    "fishing": {
+        "id": "fishing",
         "name": "釣魚",
         "description": "居民們的肚子，由你來守護！！生鮮食品要盡快處理喔！",
         "time": [3000, 3600],
         "reward": [80, 200],
         "overTimeRewardRatio": 0.35
     },
-    "work3": {
-        "id": "work3",
+    "touchfish": {
+        "id": "touchfish",
         "name": "摸魚",
         "description": "不能摸魚！被發現就不好了:(",
         "reward": [0, 140],
