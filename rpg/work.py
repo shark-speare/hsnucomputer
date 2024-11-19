@@ -39,7 +39,7 @@ class Work(commands.Cog):
             player_data.seek(0)
             player_data.truncate()
             json.dump(player_json_data, player_data, ensure_ascii=False, indent=4)
-            await interaction.followup.send(f'開始{works[work_id]["name"]}\n30 分鐘後可領取薪水')
+            await interaction.followup.send(f'開始{works[work_id]["name"]}\n請準時完成工作並回報進度！')
 
     @app_commands.command(description='🪙停止工作、領取薪水')
     async def stopwork(self, interaction:discord.Interaction):
