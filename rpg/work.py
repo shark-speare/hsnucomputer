@@ -51,12 +51,17 @@ class Work(commands.Cog):
 
         with open('rpgdata/works.json', mode='r', encoding='utf8') as file:
             works:dict = json.load(file)
-        work = works[player_json_data[user_id]['status']['doing']]
+        work = works.get(player_json_data[user_id]['status']['doing'])
+        if not work:
+            await interaction.followup.send('你沒有在工作')
+            return
 
         workStartTimestamp = dt.fromisoformat(player_json_data[user_id]['status']['workStartTimestamp'])
         workingTime = (dt.now(tz=self.tz)-workStartTimestamp).seconds
+        print(workingTime)
+        print(work['time'][0])
         #工作時長不足
-        if workingTime < work['time'][0] or player_json_data[user_id]['status'].get('workStartTimestamp'):
+        if workingTime < work['time'][0]:
             await interaction.followup.send('工作時長不足')
         
         else:
