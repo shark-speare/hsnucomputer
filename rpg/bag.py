@@ -9,7 +9,7 @@ class Bag(commands.Cog):
 
     @app_commands.command(description='檢查背包')
     async def checkbag(self,interaction:discord.Interaction):
-        await interaction.response.defer()
+        await interaction.response.defer(ephemeral=True)
 
         with open('rpgdata/playerData.json', mode='r+', encoding='utf8') as file:
             player_json_data:dict = json.load(file)
@@ -24,7 +24,7 @@ class Bag(commands.Cog):
         else:
             output_str += '空空如也'
 
-        await interaction.followup.send(output_str, ephemeral=True)
+        await interaction.followup.send(output_str)
 
 
 async def setup(bot):
