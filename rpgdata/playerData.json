@@ -73,11 +73,12 @@
     },
     "690881902684667904": {
         "status": {
+            "LUK": 1,
             "doing": "",
             "workStartTimestamp": ""
         },
         "asset": {
-            "money": 1350
+            "money": 9899998868899
         },
         "bag": {
             "items": {
