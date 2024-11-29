@@ -9,6 +9,7 @@
         "money": 0
     },
     "bag": {
-        "items": {}
+        "items": {},
+        "books": {}
     }
 }
