@@ -2,7 +2,8 @@
     "status": {
         "LUK": 0,
         "doing": "",
-        "workStartTimestamp": 0
+        "workStartTimestamp": 0,
+        "oinoriTimestamp": ""
     },
     "asset": {
         "money": 0

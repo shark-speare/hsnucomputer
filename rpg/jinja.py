@@ -3,6 +3,7 @@ from discord import app_commands
 from discord.ext import commands
 import json
 import random
+import datetime
 
 from rpg._LUK_utils import *
 
@@ -28,17 +29,21 @@ class Jinja(commands.Cog):
         if player_json_data[player_id]['status']['doing']: # 判斷是否有空閒時間
             await interaction.followup.send(f'你正在{player_json_data[player_id]["status"]["doing"]}，不專心祈禱`神`是不會聽見的')
             return
+        now = datetime.date.today().isoformat()
+        if now == player_json_data[player_id]['status']['oinoriTimestamp']:
+            LUK_output = 0
+        else:
+            ratio = 1 - LUK2prob(player_LUK)
+            LUK_output = round(donate2LUK(donate) * ratio)
 
-        ratio = 1 - LUK2prob(player_LUK)
-        LUK_output = round(donate2LUK(donate) * ratio)
-
-        player_json_data[player_id]['status']['LUK'] += LUK_output
-        if player_json_data[player_id]['status']['LUK'] > 100:
-            player_json_data[player_id]['status']['LUK'] = 100
-        player_json_data[player_id]['asset']['money'] -= donate
-        player_data.seek(0)
-        player_data.truncate()
-        json.dump(player_json_data, player_data, ensure_ascii=False, indent=4)
+            player_json_data[player_id]['status']['LUK'] += LUK_output
+            if player_json_data[player_id]['status']['LUK'] > 100:
+                player_json_data[player_id]['status']['LUK'] = 100
+            player_json_data[player_id]['asset']['money'] -= donate
+            player_json_data[player_id]['status']['oinoriTimestamp'] = now
+            player_data.seek(0)
+            player_data.truncate()
+            json.dump(player_json_data, player_data, ensure_ascii=False, indent=4)
 
         responses = ['`神`聽見了你的祈禱', '一陣風吹過，你感覺到了`神`的存在', '`神`好像為你進行了祈福', '你相信`神`幫助了你']
 
