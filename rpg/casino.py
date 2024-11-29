@@ -3,6 +3,7 @@ from discord import app_commands
 from discord.ext import commands
 import json
 import random
+from rpg._LUK_utils import LUK2prob
 
 class Casino(commands.Cog):
     def __init__(self,bot:commands.Bot):
@@ -29,12 +30,23 @@ class Casino(commands.Cog):
 
         number = random.randint(1, 100)
 
-        for i in range(3):
+        player_LUK = player_data[player_id]['status']['LUK']
+        for i in range(4):
+            if i == 3:
+                if random.random() < LUK2prob(player_LUK):
+                    await interaction.followup.send('你發現你剛剛似乎沒有作答到，再試一次吧！')
+                    with open('rpgdata/playerData.json', mode='w', encoding='utf8') as file:
+                        player_data[player_id]['status']['LUK'] -= 30
+                        if player_data[player_id]['status']['LUK'] < 0:
+                            player_data[player_id]['status']['LUK'] = 0
+                        json.dump(player_data, file, ensure_ascii=False, indent=4)
+                else: break
+
             await interaction.followup.send(f'第 **{i+1}** 次機會\n請輸入一個 1~100 的數字')
             try:
                 response = await self.bot.wait_for('message', check=lambda m: m.author == interaction.user, timeout=30)
-            except TimeoutError:
-                await interaction.followup.send('回應超時，取消遊戲')
+            except:
+                await interaction.followup.send('機會總是不經意地消失呢！')
                 return
             guess = int(response.content)
 
