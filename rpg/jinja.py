@@ -33,6 +33,8 @@ class Jinja(commands.Cog):
         LUK_output = round(donate2LUK(donate) * ratio)
 
         player_json_data[player_id]['status']['LUK'] += LUK_output
+        if player_json_data[player_id]['status']['LUK'] > 100:
+            player_json_data[player_id]['status']['LUK'] = 100
         player_json_data[player_id]['asset']['money'] -= donate
         player_data.seek(0)
         player_data.truncate()
