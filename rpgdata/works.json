@@ -4,8 +4,18 @@
         "name": "拔草",
         "description": "小鎮的草太長了，請幫忙拔掉。維護小鎮環境，人人有責！！",
         "reward": [30, 100],
-        "time": [1800, 3600],
-        "overTimeRewardRatio": 0.8
+        "time": [1, 3600],
+        "overTimeRewardRatio": 0.8,
+        "drops": {
+            "item-weed": {
+                "amount": [0, 5],
+                "probability": 0.3
+            },
+            "item-worm": {
+                "amount": [0, 3],
+                "probability": 0.15
+            }
+        }
     },
     "fishing": {
         "id": "fishing",
@@ -13,7 +23,8 @@
         "description": "居民們的肚子，由你來守護！！生鮮食品要盡快處理喔！",
         "time": [3000, 3600],
         "reward": [80, 200],
-        "overTimeRewardRatio": 0.35
+        "overTimeRewardRatio": 0.35,
+        "drops": {}
     },
     "touchfish": {
         "id": "touchfish",
@@ -21,6 +32,7 @@
         "description": "不能摸魚！被發現就不好了:(",
         "reward": [0, 140],
         "time": [600, 610],
-        "overTimeRewardRatio": -1.8
+        "overTimeRewardRatio": -1.8,
+        "drops": {}
     }
 }

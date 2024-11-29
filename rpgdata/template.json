@@ -1,9 +1,13 @@
 {
     "status": {
+        "LUK": 0,
         "doing": "",
         "workStartTimestamp": 0
     },
     "asset": {
         "money": 0
+    },
+    "bag": {
+        "items": {}
     }
 }
