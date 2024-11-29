@@ -13,6 +13,15 @@
         "id": "item-worm",
         "name": "蟲子",
         "description": "一條蟲子，看起來很噁心。"
+    },
+    "item-fish": {
+        "id": "item-fish",
+        "name": "魚",
+        "description": "就是一條魚。"
+    },
+    "item-waterweed": {
+        "id": "item-waterweed",
+        "name": "水草",
+        "description": "一株水草，似乎不怎麼值錢。"
     }
-
 }
