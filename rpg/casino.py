@@ -8,7 +8,7 @@ class Casino(commands.Cog):
     def __init__(self,bot:commands.Bot):
         self.bot = bot
 
-    @app_commands.command(description='450 快樂猜數字')
+    @app_commands.command(description='🪙450 快樂猜數字')
     async def guessnumber(self, interaction:discord.Interaction):
         await interaction.response.defer()
 
@@ -31,7 +31,11 @@ class Casino(commands.Cog):
 
         for i in range(3):
             await interaction.followup.send(f'第 **{i+1}** 次機會\n請輸入一個 1~100 的數字')
-            response = await self.bot.wait_for('message', check=lambda m: m.author == interaction.user, timeout=30)
+            try:
+                response = await self.bot.wait_for('message', check=lambda m: m.author == interaction.user, timeout=30)
+            except TimeoutError:
+                await interaction.followup.send('回應超時，取消遊戲')
+                return
             guess = int(response.content)
 
             if guess == number:
