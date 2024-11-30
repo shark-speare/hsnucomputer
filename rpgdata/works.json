@@ -33,6 +33,18 @@
                 "amount": [0, 2],
                 "probability": 0.1
             }
+        },
+        "usableItems": {
+            "item-worm": {
+                "disappear_probability": 1,
+                "reward": [0, 0],
+                "drops": {
+                    "item-fish": {
+                        "amount": [1, 2],
+                        "probability": 0.5
+                    }
+                }
+            }
         }
     },
     "touchfish": {

@@ -5,6 +5,7 @@ import json
 from discord.ext import commands
 from datetime import datetime as dt
 from datetime import timezone, timedelta
+from typing import Optional
 import random
 
 def get_work_list():
@@ -17,12 +18,11 @@ class Work(commands.Cog):
         self.tz = timezone(timedelta(hours=8))
 
     @app_commands.command(description='🪙輸入工作 ID 開始工作')
-    @app_commands.choices(工作=[
-        Choice(name=key, value=key) for key in get_work_list()
-    ])
-    async def work(self, interaction:discord.Interaction, 工作: Choice[str]):
+    @app_commands.choices(工作=[Choice(name=key, value=key) for key in get_work_list()])
+    async def work(self, interaction:discord.Interaction, 工作: Choice[str], 道具: Optional[str]):
         await interaction.response.defer()
         user_id = str(interaction.user.id)
+        usedItem = 道具
         work_id = 工作.value
 
         player_data = open('rpgdata/playerData.json', mode='r+', encoding='utf8')
@@ -38,17 +38,30 @@ class Work(commands.Cog):
 
         if work_id not in works.keys(): # 判斷工作是否存在
             await interaction.followup.send('工作不存在，天下沒有白吃的午餐，也沒有白做的工作！')
+            return
 
-        elif player_json_data[user_id]['status']['doing']: # 判斷是否有空閒時間
-            await interaction.followup.send(f'你正在{player_json_data[user_id]["status"]["doing"]}，分身乏術')
+        if player_json_data[user_id]['status']['doing']['id']: # 判斷是否有空閒時間
+            await interaction.followup.send(f'你正在{player_json_data[user_id]["status"]["doing"]["id"]}，分身乏術')
+            return
 
-        else:
-            player_json_data[user_id]['status']['workStartTimestamp'] = dt.now(tz=self.tz).isoformat()
-            player_json_data[user_id]['status']['doing'] = work_id
-            player_data.seek(0)
-            player_data.truncate()
-            json.dump(player_json_data, player_data, ensure_ascii=False, indent=4)
-            await interaction.followup.send(f'開始{works[work_id]["name"]}\n請準時完成工作並回報進度！')
+        if usedItem: # 判斷是否使用道具
+            with open('rpgdata/items.json', mode='r', encoding='utf8') as file:
+                items_id_table:dict = json.load(file)
+            if (usedItem not in player_json_data[user_id]['bag']['items'].keys()) or (player_json_data[user_id]['bag']['items'][usedItem] == 0):
+                await interaction.followup.send(f'你沒有{items_id_table[usedItem]["name"]}')
+                return
+            elif usedItem not in works[work_id]['usableItems']:
+                await interaction.followup.send(f'這個工作不需要{items_id_table[usedItem]["name"]}')
+                return
+            else:
+                player_json_data[user_id]['status']['doing']['usedItems'].append(usedItem)
+
+        player_json_data[user_id]['status']['doing']['startTimestamp'] = dt.now(tz=self.tz).isoformat()
+        player_json_data[user_id]['status']['doing']['id'] = work_id
+        player_data.seek(0)
+        player_data.truncate()
+        json.dump(player_json_data, player_data, ensure_ascii=False, indent=4)
+        await interaction.followup.send(f'開始{works[work_id]["name"]}\n請準時完成工作並回報進度！')
 
     @app_commands.command(description='🪙停止工作、領取薪水')
     async def stopwork(self, interaction:discord.Interaction):
@@ -60,12 +73,12 @@ class Work(commands.Cog):
 
         with open('rpgdata/works.json', mode='r', encoding='utf8') as file:
             works:dict = json.load(file)
-        work = works.get(player_json_data[user_id]['status']['doing'])
+        work = works.get(player_json_data[user_id]['status']['doing']['id'])
         if not work:
             await interaction.followup.send('你沒有在工作')
             return
 
-        workStartTimestamp = dt.fromisoformat(player_json_data[user_id]['status']['workStartTimestamp'])
+        workStartTimestamp = dt.fromisoformat(player_json_data[user_id]['status']['doing']['startTimestamp'])
         workingTime = (dt.now(tz=self.tz)-workStartTimestamp).seconds
 
         #工作時長不足
@@ -79,25 +92,45 @@ class Work(commands.Cog):
                 work_compelete_message = '工作超時！你很累，雇主不開心 :(\n'
                 money *= work['overTimeRewardRatio']
                 money = int(money)
+            work_compelete_message += f'你獲得了 {money}！\n'
+            
             with open('rpgdata/items.json', mode='r', encoding='utf8') as file:
                 items_id_table:dict = json.load(file)
-            for drop_item_id in work['drops'].keys():
-                drop = work['drops'][drop_item_id]
-                if random.random() < drop['probability']:
-                    amount = random.randint(drop['amount'][0], drop['amount'][1])
-                    if amount:
-                        if drop_item_id not in player_json_data[user_id]['bag']['items'].keys():
-                            player_json_data[user_id]['bag']['items'][drop_item_id] = amount
-                        else:
-                            player_json_data[user_id]['bag']['items'][drop_item_id] += amount
-                        work_compelete_message += f'你意外的獲得了 {amount} 個 {items_id_table[drop_item_id]["name"]}！\n'
+
+            drops_tables = [work['drops']]
+
+            for usedItem in player_json_data[user_id]['status']['doing']['usedItems']:
+                item_setting = work['usableItems'][usedItem]
+                if random.random() <= item_setting['disappear_probability']:
+                    player_json_data[user_id]['bag']['items'][usedItem] -= 1
+                    if player_json_data[user_id]['bag']['items'][usedItem] == 0:
+                        player_json_data[user_id]['bag']['items'].pop(usedItem)
+                    work_compelete_message += f'{items_id_table[usedItem]["name"]} 消耗殆盡\n'
+                additional_reward = random.randint(item_setting['reward'][0], item_setting['reward'][1])
+                if additional_reward:
+                    work_compelete_message += f'{items_id_table[usedItem]["name"]} 帶來了額外的 {additional_reward}！\n'
+                    money += additional_reward
+                drops_tables.append(item_setting['drops'])
+
+            for drops_table in drops_tables:
+                for drop_item_id in drops_table.keys():
+                    drop = drops_table[drop_item_id]
+                    if random.random() < drop['probability']:
+                        amount = random.randint(drop['amount'][0], drop['amount'][1])
+                        if amount:
+                            if drop_item_id not in player_json_data[user_id]['bag']['items'].keys():
+                                player_json_data[user_id]['bag']['items'][drop_item_id] = amount
+                            else:
+                                player_json_data[user_id]['bag']['items'][drop_item_id] += amount
+                            work_compelete_message += f'你意外的獲得了 {amount} 個 {items_id_table[drop_item_id]["name"]}！\n'
+
             player_json_data[user_id]['asset']['money'] += money
-            player_json_data[user_id]['status']['doing'] = ""
-            player_json_data[user_id]['status']['workStartTimestamp'] = ""
+            player_json_data[user_id]['status']['doing']['id'] = ""
+            player_json_data[user_id]['status']['doing']['startTimestamp'] = ""
+            player_json_data[user_id]['status']['doing']['usedItems'] = []
             player_data.seek(0)
             player_data.truncate()
             json.dump(player_json_data, player_data, ensure_ascii=False, indent=4)
-            work_compelete_message += f'你獲得了 {money}！'
             await interaction.followup.send(work_compelete_message)
 
 
