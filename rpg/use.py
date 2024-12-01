@@ -2,7 +2,7 @@ import discord
 from discord import app_commands
 from discord.ext import commands
 import json
-from rpg._usableItems import Book
+from rpg._core import Book
 
 class Use(commands.Cog):
     def __init__(self,bot:commands.Bot):
@@ -15,14 +15,10 @@ class Use(commands.Cog):
 
         with open('rpgdata/playerData.json', encoding='utf8') as file:
             player_data = json.load(file)
-        with open('rpgdata/books.json', encoding='utf8') as file:
-            books_data = json.load(file)
             
         if book_id in player_data[player_id]['bag']['books']:
             book = Book(book_id)
             await interaction.followup.send(book.content)
-        
-
 
 async def setup(bot):
     await bot.add_cog(Use(bot))

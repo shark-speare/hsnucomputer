@@ -4,7 +4,7 @@
         "name": "拔草",
         "description": "小鎮的草太長了，請幫忙拔掉。維護小鎮環境，人人有責！！",
         "reward": [30, 100],
-        "time": [1, 3600],
+        "time": [1800, 3600],
         "overTimeRewardRatio": 0.8,
         "drops": {
             "item-weed": {
