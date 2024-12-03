@@ -109,9 +109,14 @@ class Player:
             self.create()
             all_player_json_data = AllPlayerData().json_data
 
-        self.status = all_player_json_data[player_id].get('status')
-        self.asset = all_player_json_data[player_id].get('asset')
-        self.bag = all_player_json_data[player_id].get('bag')
+        player_data = all_player_json_data[player_id]
+
+        self.status = player_data.get('status')
+        self.asset = player_data.get('asset')
+        self.bag = player_data.get('bag')
+
+        for physical_attack_id in player_data.get('physicalAttacks', []):
+            setattr(self, physical_attack_id, PhysicalAttack(self, physical_attack_id))
 
     def create(self):
         with open('rpgdata/template.json', mode='r', encoding='utf8') as file:
@@ -207,3 +212,48 @@ class Player:
         all_player_data.close()
 
         return work_compelete_message
+    
+
+class PhysicalAttack:
+    def __init__(self, user, attack_id):
+        self.user = user
+
+        with open('rpgdata/physicalAttacks.json', mode='r', encoding='utf8') as file:
+            attacks:dict = json.load(file)
+            attack_data:dict = attacks.get(attack_id, {})
+        self.id = attack_data.get('id')
+        self.name = attack_data.get('name')
+        self.description = attack_data.get('description')
+        self.damage:str = attack_data.get('damage')
+
+    def attack(self, target):
+        damage = eval(self.damage.format(ATK=self.user.ATK, STR=self.user.STR, DEF_=target.DEF))
+        if random.random() < self.user.CRI: damage *= 2
+        target.HP -= damage
+        return damage
+
+class Enemy:
+    def __init__(self, enemy_id):
+        with open('rpgdata/enemies.json', mode='r', encoding='utf8') as file:
+            enemies:dict = json.load(file)
+            enemy_data:dict = enemies.get(enemy_id, {})
+        self.id = enemy_data.get('id')
+        self.name = enemy_data.get('name')
+
+        self.HP = enemy_data.get('HP')
+        self.MP = enemy_data.get('MP')
+        self.ATK = enemy_data.get('ATK')
+        self.CRI = enemy_data.get('CRI')
+        self.DEF = enemy_data.get('DEF')
+        self.STR = enemy_data.get('STR')
+        self.SPD = enemy_data.get('SPD')
+        self.AGI = enemy_data.get('AGI')
+        self.CON = enemy_data.get('CON')
+        self.MEN = enemy_data.get('MEN')
+        self.LUK = enemy_data.get('LUK')
+
+        for physical_attack_id in enemy_data.get('physicalAttacks', []):
+            setattr(self, physical_attack_id, PhysicalAttack(self, physical_attack_id))
+
+        self.reward = enemy_data.get('reward')
+        self.drops = enemy_data.get('drops')

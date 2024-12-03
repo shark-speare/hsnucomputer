@@ -1,0 +1,26 @@
+{
+    "blue_slime": {
+        "id": "blue_slime",
+        "name": "藍色史萊姆",
+        "HP": 10,
+        "MP": 5,
+        "ATK": 10,
+        "CRI": 0,
+        "DEF": 3,
+        "STR": 2,
+        "SPD": 1,
+        "AGI": 1,
+        "CON": 0,
+        "MEN": 0,
+        "LUK": 6,
+        "exit_round": 2,
+        "physicalAttacks": ["hit"],
+        "reward": [10, 20],
+        "drops": {
+            "item-slime": {
+                "amount": [1, 3],
+                "probability": 0.5
+            }
+        }
+    }
+}

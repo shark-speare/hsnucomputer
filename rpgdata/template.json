@@ -14,5 +14,8 @@
     "bag": {
         "items": {},
         "books": {}
-    }
+    },
+    "physicalAttacks": [
+        "hit"
+    ]
 }
