@@ -1,210 +1,290 @@
 {
     "561451790143586345": {
         "status": {
-            "doing": "weed",
-            "workStartTimestamp": "2024-11-22T15:15:24.235557+08:00",
-            "LUK": 0
+            "LUK": 0,
+            "doing": {
+                "id": "weed",
+                "usedItems": [],
+                "startTimestamp": "2024-11-22T15:15:24.235557+08:00"
+            },
+            "oinoriTimestamp": ""
         },
         "asset": {
             "money": 125
         },
         "bag": {
-            "items": {}
+            "items": {},
+            "books": {}
         }
     },
     "966307667943510026": {
         "status": {
-            "doing": "",
-            "workStartTimestamp": "",
-            "LUK": 0
+            "LUK": 0,
+            "doing": {
+                "id": "",
+                "usedItems": [],
+                "startTimestamp": ""
+            },
+            "oinoriTimestamp": ""
         },
         "asset": {
             "money": 9817
         },
         "bag": {
-            "items": {}
+            "items": {},
+            "books": {}
         }
     },
     "1130318688956989490": {
         "status": {
-            "doing": "weed",
-            "workStartTimestamp": "2024-11-22T21:11:15.325844+08:00",
-            "LUK": 0
+            "LUK": 0,
+            "doing": {
+                "id": "weed",
+                "usedItems": [],
+                "startTimestamp": "2024-11-22T21:11:15.325844+08:00"
+            },
+            "oinoriTimestamp": ""
         },
         "asset": {
             "money": 932
         },
         "bag": {
-            "items": {}
+            "items": {},
+            "books": {}
         }
     },
     "1259871271290802278": {
         "status": {
-            "doing": "fishing",
-            "workStartTimestamp": "2024-11-19T17:50:25.747833+08:00",
-            "LUK": 0
+            "LUK": 0,
+            "doing": {
+                "id": "fishing",
+                "usedItems": [],
+                "startTimestamp": "2024-11-19T17:50:25.747833+08:00"
+            },
+            "oinoriTimestamp": ""
         },
         "asset": {
             "money": 113
         },
         "bag": {
-            "items": {}
+            "items": {},
+            "books": {}
         }
     },
     "893303476740841502": {
         "status": {
-            "doing": "",
-            "workStartTimestamp": "",
-            "LUK": 0
+            "LUK": 0,
+            "doing": {
+                "id": "",
+                "usedItems": [],
+                "startTimestamp": ""
+            },
+            "oinoriTimestamp": ""
         },
         "asset": {
             "money": 1215
         },
         "bag": {
-            "items": {}
+            "items": {},
+            "books": {}
         }
     },
     "1036502809979387965": {
         "status": {
-            "doing": "fishing",
-            "workStartTimestamp": "2024-11-29T19:40:03.846033+08:00",
-            "LUK": 0
+            "LUK": 0,
+            "doing": {
+                "id": "fishing",
+                "usedItems": [],
+                "startTimestamp": "2024-11-29T19:40:03.846033+08:00"
+            },
+            "oinoriTimestamp": ""
         },
         "asset": {
             "money": 227
         },
         "bag": {
-            "items": {}
+            "items": {},
+            "books": {}
         }
     },
     "856764007235059743": {
         "status": {
-            "doing": "fishing",
-            "workStartTimestamp": "2024-11-29T21:08:41.462633+08:00",
-            "LUK": 0
+            "LUK": 0,
+            "doing": {
+                "id": "fishing",
+                "usedItems": [],
+                "startTimestamp": "2024-11-29T21:08:41.462633+08:00"
+            },
+            "oinoriTimestamp": ""
         },
         "asset": {
             "money": 4512
         },
         "bag": {
-            "items": {}
+            "items": {},
+            "books": {}
         }
     },
     "972012151264915467": {
         "status": {
-            "doing": "fishing",
-            "workStartTimestamp": "2024-11-24T11:25:59.901153+08:00",
-            "LUK": 0
+            "LUK": 0,
+            "doing": {
+                "id": "fishing",
+                "usedItems": [],
+                "startTimestamp": "2024-11-24T11:25:59.901153+08:00"
+            },
+            "oinoriTimestamp": ""
         },
         "asset": {
             "money": 4182
         },
         "bag": {
-            "items": {}
+            "items": {},
+            "books": {}
         }
     },
     "690881902684667904": {
         "status": {
-            "doing": "weed",
-            "workStartTimestamp": "2024-11-29T22:26:42.908791+08:00",
-            "LUK": 0
+            "LUK": 0,
+            "doing": {
+                "id": "weed",
+                "usedItems": [],
+                "startTimestamp": "2024-11-29T22:26:42.908791+08:00"
+            },
+            "oinoriTimestamp": ""
         },
         "asset": {
             "money": 11640
         },
         "bag": {
-            "items": {}
+            "items": {},
+            "books": {}
         }
     },
     "569309543297843214": {
         "status": {
-            "doing": "fishing",
-            "workStartTimestamp": "2024-11-22T16:10:53.828205+08:00",
-            "LUK": 0
+            "LUK": 0,
+            "doing": {
+                "id": "fishing",
+                "usedItems": [],
+                "startTimestamp": "2024-11-22T16:10:53.828205+08:00"
+            },
+            "oinoriTimestamp": ""
         },
         "asset": {
             "money": 2199
         },
         "bag": {
-            "items": {}
+            "items": {},
+            "books": {}
         }
     },
     "922456908491800576": {
         "status": {
-            "doing": "weed",
-            "workStartTimestamp": "2024-11-29T21:17:32.271093+08:00",
-            "LUK": 0
+            "LUK": 0,
+            "doing": {
+                "id": "weed",
+                "usedItems": [],
+                "startTimestamp": "2024-11-29T21:17:32.271093+08:00"
+            },
+            "oinoriTimestamp": ""
         },
         "asset": {
             "money": 605
         },
         "bag": {
-            "items": {}
+            "items": {},
+            "books": {}
         }
     },
     "731856762701086811": {
         "status": {
-            "doing": "fishing",
-            "workStartTimestamp": "2024-11-29T21:39:37.919148+08:00",
-            "LUK": 0
+            "LUK": 0,
+            "doing": {
+                "id": "fishing",
+                "usedItems": [],
+                "startTimestamp": "2024-11-29T21:39:37.919148+08:00"
+            },
+            "oinoriTimestamp": ""
         },
         "asset": {
             "money": 5496
         },
         "bag": {
-            "items": {}
+            "items": {},
+            "books": {}
         }
     },
     "982840647750910012": {
         "status": {
-            "doing": "",
-            "workStartTimestamp": "",
-            "LUK": 0
+            "LUK": 0,
+            "doing": {
+                "id": "",
+                "usedItems": [],
+                "startTimestamp": ""
+            },
+            "oinoriTimestamp": ""
         },
         "asset": {
             "money": 0
         },
         "bag": {
-            "items": {}
+            "items": {},
+            "books": {}
         }
     },
     "936152178354188349": {
         "status": {
-            "doing": "weed",
-            "workStartTimestamp": "2024-11-20T22:14:31.324734+08:00",
-            "LUK": 0
+            "LUK": 0,
+            "doing": {
+                "id": "weed",
+                "usedItems": [],
+                "startTimestamp": "2024-11-20T22:14:31.324734+08:00"
+            },
+            "oinoriTimestamp": ""
         },
         "asset": {
             "money": 117
         },
         "bag": {
-            "items": {}
+            "items": {},
+            "books": {}
         }
     },
     "1097879688887672972": {
         "status": {
-            "doing": "fishing",
-            "workStartTimestamp": "2024-11-26T13:19:08.664565+08:00",
-            "LUK": 0
+            "LUK": 0,
+            "doing": {
+                "id": "fishing",
+                "usedItems": [],
+                "startTimestamp": "2024-11-26T13:19:08.664565+08:00"
+            },
+            "oinoriTimestamp": ""
         },
         "asset": {
             "money": -214
         },
         "bag": {
-            "items": {}
+            "items": {},
+            "books": {}
         }
     },
     "981060983428632586": {
         "status": {
-            "doing": "",
-            "workStartTimestamp": "",
-            "LUK": 0
+            "LUK": 0,
+            "doing": {
+                "id": "",
+                "usedItems": [],
+                "startTimestamp": ""
+            },
+            "oinoriTimestamp": ""
         },
         "asset": {
             "money": 354
         },
         "bag": {
-            "items": {}
+            "items": {},
+            "books": {}
         }
     }
 }

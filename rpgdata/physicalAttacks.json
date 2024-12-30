@@ -1,0 +1,8 @@
+{
+    "hit": {
+        "id": "hit",
+        "name": "撞擊",
+        "description": "用力撞擊",
+        "damage": "{ATK} * 0.5 + {STR} * 0.2 - {DEF_} * 0.8"
+    }
+}

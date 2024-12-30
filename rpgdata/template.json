@@ -1,13 +1,21 @@
 {
     "status": {
         "LUK": 0,
-        "doing": "",
-        "workStartTimestamp": 0
+        "doing": {
+            "id": "",
+            "usedItems": [],
+            "startTimestamp": 0
+        },
+        "oinoriTimestamp": ""
     },
     "asset": {
         "money": 0
     },
     "bag": {
-        "items": {}
-    }
+        "items": {},
+        "books": {}
+    },
+    "physicalAttacks": [
+        "hit"
+    ]
 }
