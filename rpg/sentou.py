@@ -4,7 +4,7 @@ from discord.ext import commands
 import json
 from rpg._core import *
 
-def get_today_enemy_options():
+def get_today_enemy_options() -> list[Enemy]:
     with open('rpgdata/today.json',mode='r',encoding='utf8') as file:
         today_data = json.load(file)
         enemies = today_data['enemies']
