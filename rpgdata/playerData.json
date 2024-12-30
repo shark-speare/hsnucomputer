@@ -3,7 +3,7 @@
         "status": {
             "doing": {
                 "id": "weed",
-                "useItems": [],
+                "usedItems": [],
                 "startTimestamp": "2024-12-10T19:05:39.350634+08:00"
             },
             "workStartTimestamp": "2024-12-10T19:05:39.350634+08:00",
@@ -22,7 +22,7 @@
         "status": {
             "doing": {
                 "id": "",
-                "useItems": [],
+                "usedItems": [],
                 "startTimestamp": ""
             },
             "workStartTimestamp": "",
@@ -42,7 +42,7 @@
         "status": {
             "doing": {
                 "id": "weed",
-                "useItems": [],
+                "usedItems": [],
                 "startTimestamp": "2024-11-22T21:11:15.325844+08:00"
             },
             "workStartTimestamp": "2024-11-22T21:11:15.325844+08:00",
@@ -59,7 +59,7 @@
         "status": {
             "doing": {
                 "id": "fishing",
-                "useItems": [],
+                "usedItems": [],
                 "startTimestamp": "2024-11-19T17:50:25.747833+08:00"
             },
             "workStartTimestamp": "2024-11-19T17:50:25.747833+08:00",
@@ -76,7 +76,7 @@
         "status": {
             "doing": {
                 "id": "",
-                "useItems": [],
+                "usedItems": [],
                 "startTimestamp": ""
             },
             "workStartTimestamp": "",
@@ -93,7 +93,7 @@
         "status": {
             "doing": {
                 "id": "",
-                "useItems": [],
+                "usedItems": [],
                 "startTimestamp": ""
             },
             "workStartTimestamp": "",
@@ -112,7 +112,7 @@
         "status": {
             "doing": {
                 "id": "fishing",
-                "useItems": [],
+                "usedItems": [],
                 "startTimestamp": "2024-12-30T11:15:26.354073+08:00"
             },
             "workStartTimestamp": "2024-12-30T11:15:26.354073+08:00",
@@ -132,7 +132,7 @@
         "status": {
             "doing": {
                 "id": "fishing",
-                "useItems": [],
+                "usedItems": [],
                 "startTimestamp": "2024-12-03T22:21:47.128753+08:00"
             },
             "workStartTimestamp": "2024-12-03T22:21:47.128753+08:00",
@@ -149,7 +149,7 @@
         "status": {
             "doing": {
                 "id": "",
-                "useItems": [],
+                "usedItems": [],
                 "startTimestamp": ""
             },
             "workStartTimestamp": "",
@@ -169,7 +169,7 @@
         "status": {
             "doing": {
                 "id": "touchfish",
-                "useItems": [],
+                "usedItems": [],
                 "startTimestamp": "2024-12-30T11:11:37.725004+08:00"
             },
             "workStartTimestamp": "2024-12-30T11:11:37.725004+08:00",
@@ -186,7 +186,7 @@
         "status": {
             "doing": {
                 "id": "weed",
-                "useItems": [],
+                "usedItems": [],
                 "startTimestamp": "2024-12-16T17:49:10.995519+08:00"
             },
             "workStartTimestamp": "2024-12-16T17:49:10.995519+08:00",
@@ -206,7 +206,7 @@
         "status": {
             "doing": {
                 "id": "fishing",
-                "useItems": [],
+                "usedItems": [],
                 "startTimestamp": "2024-12-30T10:51:43.386179+08:00"
             },
             "workStartTimestamp": "2024-12-30T10:51:43.386179+08:00",
@@ -226,7 +226,7 @@
         "status": {
             "doing": {
                 "id": "",
-                "useItems": [],
+                "usedItems": [],
                 "startTimestamp": ""
             },
             "workStartTimestamp": "",
@@ -245,7 +245,7 @@
         "status": {
             "doing": {
                 "id": "weed",
-                "useItems": [],
+                "usedItems": [],
                 "startTimestamp": "2024-11-20T22:14:31.324734+08:00"
             },
             "workStartTimestamp": "2024-11-20T22:14:31.324734+08:00",
@@ -262,7 +262,7 @@
         "status": {
             "doing": {
                 "id": "fishing",
-                "useItems": [],
+                "usedItems": [],
                 "startTimestamp": "2024-11-26T13:19:08.664565+08:00"
             },
             "workStartTimestamp": "2024-11-26T13:19:08.664565+08:00",
@@ -279,7 +279,7 @@
         "status": {
             "doing": {
                 "id": "",
-                "useItems": [],
+                "usedItems": [],
                 "startTimestamp": ""
             },
             "workStartTimestamp": "",
@@ -297,7 +297,7 @@
             "LUK": 0,
             "doing": {
                 "id": "",
-                "useItems": [],
+                "usedItems": [],
                 "startTimestamp": 0
             },
             "workStartTimestamp": 0
@@ -314,7 +314,7 @@
             "LUK": 0,
             "doing": {
                 "id": "fishing",
-                "useItems": [],
+                "usedItems": [],
                 "startTimestamp": "2024-12-04T15:09:06.351089+08:00"
             },
             "workStartTimestamp": "2024-12-04T15:09:06.351089+08:00"
@@ -331,7 +331,7 @@
             "LUK": 0,
             "doing": {
                 "id": "",
-                "useItems": [],
+                "usedItems": [],
                 "startTimestamp": 0
             },
             "workStartTimestamp": 0

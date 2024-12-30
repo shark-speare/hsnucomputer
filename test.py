@@ -11,7 +11,7 @@ with open('playerData.json',mode='r+',encoding='utf8') as file:
         time = data[i]['status']["workStartTimestamp"]
         data[i]['status']['doing'] = {
             "id" : id,
-            "useItems" : [],
+            "usedItems" : [],
             "startTimestamp" : time,
 
         }
