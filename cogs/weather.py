@@ -39,31 +39,31 @@ class Weather(commands.Cog):
     def extract_info(self,location) -> list[dict]:
         query = """
 query forecast {
-  forecast {
-    locations(locationName: "place") {
-      locationName,
-      WeatherDescription {
-        timePeriods {
-          startTime,
-          weatherDescription
+    forecast (LocationName: "place") {
+        Locations {
+            LocationName,
+            WeatherDescription {
+                Time {
+                    StartTime,
+                    WeatherDescription
+                }
+            }
         }
-      }
-    }
   }
 }
 """.replace('place',location)
 
         response = requests.post(url=self.url,params=self.key,json={'query':query}).json()
-        periods = response['data']['forecast']['locations'][0]['WeatherDescription']['timePeriods']
+        periods = response['data']['forecast']['Locations'][0]['WeatherDescription']['Time']
 
         return_list = []
         for i in range(0,14,2):
             data = periods[i]
 
-            datetime = dt.strptime(data['startTime'],'%Y-%m-%dT%H:%M:%S')
+            datetime = dt.fromisoformat(data['StartTime'])
             date = datetime.strftime('%m/%d (%a)')
 
-            des = data['weatherDescription']
+            des = data['WeatherDescription']
             
             return_list.append({
                 'date' : date,
