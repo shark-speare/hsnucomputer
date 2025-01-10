@@ -10,7 +10,7 @@ class Homo(commands.Cog):
     @app_commands.command(description='輸入數字使得其轉換為惡臭數字(github:chinosk6)')
     async def homo(self,interaction:discord.Interaction,數字:int):
         result = _homo.generate_homo(數字)
-        await interaction.response.send_message(result)
+        await interaction.response.send_message(discord.utils.escape_markdown(result))
 
 async def setup(bot):
     await bot.add_cog(Homo(bot))
