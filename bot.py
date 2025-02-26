@@ -50,10 +50,10 @@ async def load_ext():
             await bot.load_extension(f"cogs.{filename[:-3]}")
             print(f"Loaded {filename}")
 
-    for filename in os.listdir("./rpg"):
-        if filename.endswith(".py") and not filename.startswith("_"):
-            await bot.load_extension(f"rpg.{filename[:-3]}")
-            print(f"Loaded {filename}")
+    # for filename in os.listdir("./rpg"):
+    #     if filename.endswith(".py") and not filename.startswith("_"):
+    #         await bot.load_extension(f"rpg.{filename[:-3]}")
+    #         print(f"Loaded {filename}")
     
 async def main():
     discord.utils.setup_logging()
