@@ -1,6 +1,6 @@
 discord.py
 discord.py[voice]
-google-generativeai
+google-genai
 feedparser
 requests
 python-dotenv
