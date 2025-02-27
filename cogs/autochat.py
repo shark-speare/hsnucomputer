@@ -18,7 +18,7 @@ class Chat(commands.Cog):
         if msg.channel.id != 1344548287033769984 or msg.author.bot or msg.content.startswith('.'): return
 
         msgs = []
-        async for msg in msg.channel.history(limit=10):
+        async for msg in msg.channel.history(limit=50):
             if not msg.content.startswith('.'):
                 msgs.append((msg.author.display_name, msg.content))
         msgs.reverse()
