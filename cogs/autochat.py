@@ -19,7 +19,8 @@ class Chat(commands.Cog):
 
         msgs = []
         async for msg in msg.channel.history(limit=10):
-            msgs.append((msg.author.display_name, msg.content))
+            if not msg.content.startswith('.'):
+                msgs.append((msg.author.display_name, msg.content))
         msgs.reverse()
 
         client = genai.Client(api_key=self.key)
