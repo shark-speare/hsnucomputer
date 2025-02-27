@@ -15,7 +15,7 @@ class Chat(commands.Cog):
     
     @commands.Cog.listener()
     async def on_message(self, msg:discord.Message):
-        if msg.channel.id != 1344548287033769984 or msg.author.bot or msg.content.startswith('-'): return
+        if msg.channel.id != 1344606603487481908 or msg.author.bot or msg.content.startswith('-'): return
 
         msgs = []
         async for msg in msg.channel.history(limit=50):
