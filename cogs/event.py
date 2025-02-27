@@ -40,7 +40,7 @@ class Event(commands.Cog):
         client = genai.Client(api_key=self.key)
         msgs = []
 
-        async for msg in channel.history(limit=20, oldest_first=True):
+        async for msg in channel.history(limit=20):
             msgs.append(msg.content)
         prompt = f"請假設你在聊天室，以下是一個陣列，儲存了之前所有的對話，請用一句話接續這個聊天，不管是開新話題還是繼續話題:{msgs}"
         
