@@ -35,19 +35,20 @@ class Event(commands.Cog):
 
             await selected(channel)
     
-    async def getTopic(self, channel):
+    async def getTopic(self, channel:discord.TextChannel):
 
-            client = genai.Client(api_key=self.key)
+        client = genai.Client(api_key=self.key)
+        msgs = []
 
-            prompt = """請假設你在聊天室，請開一個話題
-                        越尷尬越好
-                        但尷尬的不是話題，而是說話的方式，話題可以正常"""
-            
-            response = client.models.generate_content(
-                model="gemini-2.0-flash",
-                contents=textwrap.dedent(prompt))
-            
-            await channel.send(response.text)
+        async for msg in channel.history(limit=20, oldest_first=True):
+            msgs.append(msg.content)
+        prompt = f"請假設你在聊天室，以下是一個陣列，儲存了之前所有的對話，請接續這個聊天，不管是開新話題還是繼續話題:{msgs}"
+        
+        response = client.models.generate_content(
+            model="gemini-2.0-flash",
+            contents=textwrap.dedent(prompt))
+        
+        await channel.send(response.text)
 
 async def setup(bot):
     await bot.add_cog(Event(bot))
