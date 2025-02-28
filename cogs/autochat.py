@@ -4,8 +4,7 @@ from dotenv import load_dotenv
 import os
 load_dotenv()
 from google import genai
-from pydantic import BaseModel
-
+import asyncio
 
 
 class Chat(commands.Cog):
@@ -26,13 +25,19 @@ class Chat(commands.Cog):
         client = genai.Client(api_key=self.key)
 
         prompt = f"這些是一串聊天記錄組成的清單。每一項有一個元組，是一則訊息，包含了發言者名稱與內容，請你扮演一名皇帝來聊天，這個名字不代表任何意思，只是一個名字。請說出下一句話，不需要包含角色身份等等，只要說話的內容就好，然後用文言文回答: {msgs}"
+        
+        try:
+            response = client.models.generate_content(
+                model="gemini-2.0-flash",
+                contents=prompt
+            )
 
-        response = client.models.generate_content(
-            model="gemini-2.0-flash",
-            contents=prompt
-        )
+            await msg.channel.send(response.text)
 
-        await msg.channel.send(response.text)
+        except:
+            sent = await msg.channel.send("伺服器過載，請稍後再試(可將剛發送的訊息先刪除)")
+            asyncio.sleep(5)
+            await sent.delete()
 
 async def setup(bot:commands.Bot):
     await bot.add_cog(Chat(bot))        
