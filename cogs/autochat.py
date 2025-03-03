@@ -33,7 +33,7 @@ class Chat(commands.Cog):
             )
 
             webhook = await self.bot.fetch_webhook(1346010742683471872)
-            await webhook.send(response)
+            await webhook.send(response.text)
 
         except:
             sent = await msg.channel.send("伺服器過載，請稍後再試(可將剛發送的訊息先刪除)")
