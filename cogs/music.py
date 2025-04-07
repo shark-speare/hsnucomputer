@@ -78,9 +78,6 @@ class Music(commands.Cog):
                 await interaction.followup.send("下載錯誤，請確認網址")
                 return
 
-            file = open('info.json', 'w', encoding='utf8')
-            json.dump(data, file, ensure_ascii=False, indent=4)
-
             title = data['title']
             url = data['url']
             
