@@ -58,6 +58,7 @@ class Music(commands.Cog):
         ydl = YoutubeDL({
             "format": 'bestaudio/best',
             "cookiefile": "./cookies.txt",
+            "playlist_items'": ":5"
             })
         
         # 網址
