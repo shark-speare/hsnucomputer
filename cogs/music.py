@@ -55,7 +55,10 @@ class Music(commands.Cog):
         else:
             v = discord.utils.get(self.bot.voice_clients, guild=interaction.guild)
         
-        ydl = YoutubeDL({"format": 'bestaudio/best'})
+        ydl = YoutubeDL({
+            "format": 'bestaudio/best',
+            "cookies": "cookies.txt",
+            })
         
         # 網址
         if "youtu" in query:
