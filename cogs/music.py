@@ -70,7 +70,7 @@ class Music(commands.Cog):
                 return
             
             title = data['title']
-            url = data['url']
+            url = data['webpage_url']
 
             queue(title, url)
 
@@ -82,7 +82,7 @@ class Music(commands.Cog):
                 return
 
             title = data['title']
-            url = data['url']
+            url = data['webpage_url']
             
 
             queue(title, url)
@@ -104,17 +104,20 @@ class Music(commands.Cog):
     async def p_next(self, interaction:Interaction, v:discord.VoiceClient):
         next = queue()
         if next:
-            v:discord.VoiceClient = discord.utils.get(self.bot.voice_clients, guild=interaction.guild)
-            if not v:
+            ydl = YoutubeDL({
+                "format": 'bestaudio/best',
+                "cookiefile": "./cookies.txt",
+            })
+            try:
+                data = ydl.extract_info(next['url'], download=False)
+                stream_url = data['url']
+            except DownloadError:
+                await interaction.channel.send(f"播放失敗：{next['title']}")
                 return
-            
-            audio = discord.FFmpegPCMAudio(next['url'])
-            
-            v.play(audio, after=lambda _: self.bot.loop.create_task(self.p_next(interaction, v)))
-            await interaction.channel.send(f'正在播放{next['title']}')
 
-        else:
-            return
+            audio = discord.FFmpegPCMAudio(stream_url)
+            v.play(audio, after=lambda _: self.bot.loop.create_task(self.p_next(interaction, v)))
+            await interaction.channel.send(f'正在播放 {next["title"]}')
         
     @app_commands.command(description='下一首')
     async def next(self, interaction:discord.Interaction):
