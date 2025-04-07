@@ -205,6 +205,13 @@ class Music(commands.Cog):
         
         await interaction.response.send_message(msg)
 
+    @app_commands.command()
+    async def test_music(self, interaction:discord.Interaction):
+        v = discord.utils.get(self.bot.voice_clients, guild=interaction.guild)
+        audio = discord.FFmpegPCMAudio("./videoplayback.webm")
+        v.play(audio)
+
+
         
 
 async def setup(bot:commands.Bot):
