@@ -75,11 +75,13 @@ class Music(commands.Cog):
             queue(title, url)
 
         else:
-            try:
-                data = ydl.extract_info(url=f"ytsearch:{query}", download=False)['entries'][0]
-            except DownloadError:
-                await interaction.followup.send("下載錯誤，請確認網址")
-                return
+            while True:
+                try:
+                    data = ydl.extract_info(url=f"ytsearch:{query}", download=False)['entries'][0]
+                except DownloadError:
+                    pass
+                else:
+                    break
 
             title = data['title']
             url = data['webpage_url']
@@ -108,12 +110,16 @@ class Music(commands.Cog):
                 "format": 'bestaudio/best',
                 "cookiefile": "./cookies.txt",
             })
-            try:
-                data = ydl.extract_info(next['url'], download=False)
-                stream_url = data['url']
-            except DownloadError:
-                await interaction.channel.send(f"播放失敗：{next['title']}")
-                return
+
+            while True:
+
+                try:
+                    data = ydl.extract_info(next['url'], download=False)
+                    stream_url = data['url']
+                except DownloadError:
+                    pass
+                else:
+                    break
 
             audio = discord.FFmpegPCMAudio(stream_url)
             v.play(audio, after=lambda _: self.bot.loop.create_task(self.p_next(interaction, v)))
