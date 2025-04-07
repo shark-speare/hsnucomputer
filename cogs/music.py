@@ -118,7 +118,7 @@ class Music(commands.Cog):
         
     @app_commands.command(description='下一首')
     async def next(self, interaction:discord.Interaction):
-        check = self.check(interaction, state="in", bot=True)
+        check = await self.check(interaction, state="in", bot=True)
         if not check:
             await interaction.response.send_message("機器人不在頻道內，請先加入一個語音頻道")
             return
@@ -131,7 +131,7 @@ class Music(commands.Cog):
 
     @app_commands.command(description='暫停')
     async def pause(self, interaction:discord.Interaction):
-        check = self.check(interaction, state="in", bot=True)
+        check = await self.check(interaction, state="in", bot=True)
         if not check:
             await interaction.response.send_message("機器人不在頻道內，請先加入一個語音頻道")
             return
@@ -144,7 +144,7 @@ class Music(commands.Cog):
 
     @app_commands.command(description='繼續')
     async def resume(self, interaction:discord.Interaction):
-        check = self.check(interaction, state="in", bot=True)
+        check = await self.check(interaction, state="in", bot=True)
         if not check:
             await interaction.response.send_message("機器人不在頻道內，請先加入一個語音頻道")
             return
@@ -158,7 +158,7 @@ class Music(commands.Cog):
     
     @app_commands.command(description='停止')
     async def stop(self, interaction:discord.Interaction):
-        check = self.check(interaction, state="in", bot=True)
+        check = await self.check(interaction, state="in", bot=True)
         if not check:
             await interaction.response.send_message("機器人不在頻道內，請先加入一個語音頻道")
             return
@@ -171,7 +171,7 @@ class Music(commands.Cog):
 
     @app_commands.command(description='離開')
     async def leave(self, interaction:discord.Interaction):
-        check = self.check(interaction, state="in", bot=True)
+        check = await self.check(interaction, state="in", bot=True)
         if not check:
             await interaction.response.send_message("機器人不在頻道內，請先加入一個語音頻道")
             return
@@ -184,7 +184,7 @@ class Music(commands.Cog):
 
     @app_commands.command(description='查看隊列')
     async def queue(self, interaction:discord.Interaction):
-        check = self.check(interaction, state="in", bot=True)
+        check = await self.check(interaction, state="in", bot=True)
         if not check:
             await interaction.response.send_message("機器人不在頻道內，請先加入一個語音頻道")
             return
