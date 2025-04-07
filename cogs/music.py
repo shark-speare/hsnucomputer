@@ -10,7 +10,7 @@ def queue(title:str=None, url:str=None):
         file = open('data/queue.json', 'r+', encoding='utf8')
         queue = json.load(file)
 
-        if queue is []:
+        if len(queue) == 0:
             return None
 
         video = queue.pop(0)
