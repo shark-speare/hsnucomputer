@@ -149,7 +149,7 @@ class Music(commands.Cog):
             await interaction.response.send_message("機器人不在頻道內，請先加入一個語音頻道")
             return
         v = discord.utils.get(self.bot.voice_clients, guild=interaction.guild)
-        if not v.is_playing():
+        if not v.is_paused():
             await interaction.response.send_message("沒有正在播放的音樂")
             return
         v.resume()
@@ -163,7 +163,7 @@ class Music(commands.Cog):
             await interaction.response.send_message("機器人不在頻道內，請先加入一個語音頻道")
             return
         v = discord.utils.get(self.bot.voice_clients, guild=interaction.guild)
-        if not v.is_playing():
+        if not v.is_playing() or not v.is_paused():
             await interaction.response.send_message("沒有正在播放的音樂")
             return
         v.stop()
@@ -181,6 +181,29 @@ class Music(commands.Cog):
             return
         await v.disconnect()
         await interaction.response.send_message("已經離開")
+
+    @app_commands.command(description='查看隊列')
+    async def queue(self, interaction:discord.Interaction):
+        check = self.check(interaction, state="in", bot=True)
+        if not check:
+            await interaction.response.send_message("機器人不在頻道內，請先加入一個語音頻道")
+            return
+        v = discord.utils.get(self.bot.voice_clients, guild=interaction.guild)
+        if not v.is_playing():
+            await interaction.response.send_message("沒有正在播放的音樂")
+            return
+        file = open('data/queue.json', 'r+', encoding='utf8')
+        queue = json.load(file)
+
+        if queue is []:
+            await interaction.response.send_message("隊列是空的")
+            return
+
+        msg = ""
+        for i in range(len(queue)):
+            msg += f"{i+1}. {queue[i]['title']}\n"
+        
+        await interaction.response.send_message(msg)
 
         
 
