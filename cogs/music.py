@@ -114,14 +114,14 @@ class Music(commands.Cog):
             while True:
 
                 try:
-                    data = ydl.extract_info(next['url'], download=False, before_options="-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5",)
+                    data = ydl.extract_info(next['url'], download=False)
                     stream_url = data['url']
                 except DownloadError:
                     pass
                 else:
                     break
 
-            audio = discord.FFmpegPCMAudio(stream_url)
+            audio = discord.FFmpegPCMAudio(stream_url,before_options="-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5",)
             v.play(audio, after=lambda _: self.bot.loop.create_task(self.p_next(interaction, v)))
             await interaction.channel.send(f'正在播放 {next["title"]}')
         
