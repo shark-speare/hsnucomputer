@@ -114,7 +114,7 @@ class Music(commands.Cog):
             while True:
 
                 try:
-                    data = ydl.extract_info(next['url'], download=False)
+                    data = ydl.extract_info(next['url'], download=False, before_options="-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5",)
                     stream_url = data['url']
                 except DownloadError:
                     pass
