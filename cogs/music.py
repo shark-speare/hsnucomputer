@@ -172,7 +172,7 @@ class Music(commands.Cog):
             await interaction.response.send_message("機器人不在頻道內，請先加入一個語音頻道")
             return
         v = discord.utils.get(self.bot.voice_clients, guild=interaction.guild)
-        if not v.is_playing() or not v.is_paused():
+        if not v.is_playing() and not v.is_paused():
             await interaction.response.send_message("沒有正在播放的音樂")
             return
         v.stop()
@@ -185,9 +185,7 @@ class Music(commands.Cog):
             await interaction.response.send_message("機器人不在頻道內，請先加入一個語音頻道")
             return
         v = discord.utils.get(self.bot.voice_clients, guild=interaction.guild)
-        if not v.is_playing():
-            await interaction.response.send_message("沒有正在播放的音樂")
-            return
+
         await v.disconnect()
         await interaction.response.send_message("已經離開")
 
