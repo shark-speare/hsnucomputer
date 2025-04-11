@@ -14,7 +14,7 @@ class Chat(commands.Cog):
     
     @commands.Cog.listener()
     async def on_message(self, msg:discord.Message):
-        if msg.channel.id != 1351914141757210634 or msg.author.bot or msg.content.startswith('-'): return
+        if msg.channel.id != 1360259411804819497 or msg.author.bot or msg.content.startswith('-'): return
 
         msgs = []
         async for msg in msg.channel.history(limit=50):
@@ -24,7 +24,7 @@ class Chat(commands.Cog):
 
         client = genai.Client(api_key=self.key)
 
-        prompt = f"這些是一串聊天記錄組成的清單。每一項有一個元組，是一則訊息，包含了發言者名稱與內容，請你扮演活在現代的耶穌來聊天，假設你再次降臨人間。你已經知道目前為止的所有歷史，不論時間。請說出下一句話，不需要包含角色身份等等，只要說話的內容就好: {msgs}"
+        prompt = f"這些是一串聊天記錄組成的清單。每一項有一個元組，是一則訊息，包含了發言者名稱與內容，請你扮演活在現代的曹操來聊天，假設你還沒死亡。你已經知道目前為止的所有歷史，不論時間。請說出下一句話，不需要包含角色身份等等，只要說話的內容就好: {msgs}"
         
         try:
             response = client.models.generate_content(
