@@ -37,7 +37,7 @@ class Music(commands.Cog):
 
     @app_commands.command(description='播放Youtube網址或搜尋Youtube')
     async def play(self, interaction:Interaction, 網址或關鍵字:str):
-        await interaction.response.defer()
+        await interaction.response.send_message("正在嘗試取得音樂")
 
         # 機器人是否已經準備播放
         check = await self.check(interaction, state="in", bot=True)
@@ -66,7 +66,7 @@ class Music(commands.Cog):
             try:
                 data = ydl.extract_info(url=網址或關鍵字, download=False)
             except DownloadError:
-                await interaction.followup.send("下載錯誤")
+                await interaction.followup.edit_message("下載錯誤")
                 return
             
             title = data['title']
@@ -79,7 +79,7 @@ class Music(commands.Cog):
             try:
                 data = ydl.extract_info(url=f"ytsearch:{網址或關鍵字}", download=False)['entries'][0]
             except DownloadError:
-                await interaction.followup.send("下載錯誤")
+                await interaction.followup.edit_message("下載錯誤")
                 return
 
             title = data['title']
@@ -88,7 +88,7 @@ class Music(commands.Cog):
 
             queue(title, url)
 
-        await interaction.followup.send(f"{title}已經加入隊列")
+        await interaction.followup.edit_message(f"{title}已經加入隊列")
 
         if not v.is_playing() or v.is_paused():
             self.bot.loop.create_task(self.p_next(interaction, v))
