@@ -66,7 +66,7 @@ class Music(commands.Cog):
             try:
                 data = ydl.extract_info(url=網址或關鍵字, download=False)
             except DownloadError:
-                await interaction.followup.send("下載錯誤，請確認網址")
+                await interaction.followup.send("下載錯誤")
                 return
             
             title = data['title']
@@ -75,13 +75,12 @@ class Music(commands.Cog):
             queue(title, url)
 
         else:
-            while True:
-                try:
-                    data = ydl.extract_info(url=f"ytsearch:{網址或關鍵字}", download=False)['entries'][0]
-                except DownloadError:
-                    pass
-                else:
-                    break
+            
+            try:
+                data = ydl.extract_info(url=f"ytsearch:{網址或關鍵字}", download=False)['entries'][0]
+            except DownloadError:
+                await interaction.followup.send("下載錯誤")
+                return
 
             title = data['title']
             url = data['webpage_url']
