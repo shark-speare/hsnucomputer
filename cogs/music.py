@@ -39,6 +39,8 @@ class Music(commands.Cog):
     async def play(self, interaction:Interaction, 網址或關鍵字:str):
         await interaction.response.send_message("正在嘗試取得音樂")
 
+        msg:discord.InteractionMessage = await interaction.original_response()
+
         # 機器人是否已經準備播放
         check = await self.check(interaction, state="in", bot=True)
         if not check:
@@ -46,7 +48,7 @@ class Music(commands.Cog):
             # 可不可以先加入
             check = await self.check(interaction, state="in", user=interaction.user)
             if not check:
-                await interaction.followup.send("機器人不在頻道內，請先加入一個語音頻道")
+                await msg.edit(content="機器人不在頻道內，請先加入一個語音頻道再使用此指令讓機器人加入")
                 return
 
             else:
@@ -66,7 +68,7 @@ class Music(commands.Cog):
             try:
                 data = ydl.extract_info(url=網址或關鍵字, download=False)
             except DownloadError:
-                await interaction.followup.edit_message("下載錯誤")
+                await msg.edit(content="下載錯誤")
                 return
             
             title = data['title']
@@ -79,7 +81,7 @@ class Music(commands.Cog):
             try:
                 data = ydl.extract_info(url=f"ytsearch:{網址或關鍵字}", download=False)['entries'][0]
             except DownloadError:
-                await interaction.followup.edit_message("下載錯誤")
+                await msg.edit(content="下載錯誤")
                 return
 
             title = data['title']
@@ -88,7 +90,7 @@ class Music(commands.Cog):
 
             queue(title, url)
 
-        await interaction.followup.edit_message(f"{title}已經加入隊列")
+        await msg.edit(content=f"{title}已經加入隊列")
 
         if not v.is_playing() or v.is_paused():
             self.bot.loop.create_task(self.p_next(interaction, v))
