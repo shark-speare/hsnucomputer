@@ -4,7 +4,7 @@ from discord.ext import commands
 from chinese_converter import to_traditional as tr
 from akipy.async_akipy import Akinator
 import httpx
-class CustomAki(Akinator):
+class CuAki(Akinator):
     def __init__(self):
         super().__init__()
         self.client = httpx.AsyncClient(mounts={
@@ -30,7 +30,8 @@ class Aki(commands.Cog):
         await interaction.followup.send(embed=embed)
 
 async def game(interaction:discord.Interaction) -> Akinator:
-    aki = CustomAki()
+    aki = Akinator()
+    
         
     await aki.start_game(language='cn')
     time = 1
