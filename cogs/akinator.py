@@ -43,7 +43,7 @@ async def game(interaction: discord.Interaction) -> Akinator:
         question = tr(str(aki))
 
         
-        await msg.edit(content=f"{time}. {question}\n({interaction.user.display_name}的遊戲))", view=view)
+        await msg.edit(content=f"{time}. {question}\n({interaction.user.display_name}的遊戲)", view=view)
 
         await view.wait()
         ans = view.children[0].values[0]
