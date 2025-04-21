@@ -25,7 +25,7 @@ class Aki(commands.Cog):
 async def game(interaction:discord.Interaction) -> Akinator:
     aki = Akinator()
         
-    await aki.start_game(language='cn')
+    await aki.start_game(language='en')
     time = 1
     while not aki.win:
         view = discord.ui.View()
