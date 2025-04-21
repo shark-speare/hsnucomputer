@@ -24,9 +24,13 @@ class Aki(commands.Cog):
 
         embed = discord.Embed(title=name, description=description, color=discord.Color.blue())
         embed.set_image(url=image_url)
+        embed.set_footer(text="是嗎")
 
         msg = await interaction.original_response()
         await msg.edit(content="", embed=embed)
+        await msg.add_reaction("✅")
+        await msg.add_reaction("❌")
+
 
 async def game(interaction: discord.Interaction) -> Akinator:
     aki = Akinator()
