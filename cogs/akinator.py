@@ -22,13 +22,15 @@ class Aki(commands.Cog):
         description = tr(aki.description_proposition)
         image_url = aki.photo
 
-        embed = discord.Embed(title=name, description=description)
+        embed = discord.Embed(title=name, description=description, color=discord.Color.blue())
         embed.set_image(url=image_url)
+
         await interaction.followup.send(embed=embed)
 
 async def game(interaction: discord.Interaction) -> Akinator:
     aki = Akinator()
 
+    msg = await interaction.original_response()
     # Monkey Patch __get_region 方法
     Akinator._Akinator__get_region = patched_get_region
 
@@ -40,7 +42,8 @@ async def game(interaction: discord.Interaction) -> Akinator:
 
         question = tr(str(aki))
 
-        await interaction.followup.send(f"{time}. {question}", view=view)
+        
+        await msg.edit(content=f"{time}. {question}\n({interaction.user.display_name}的遊戲))", view=view)
 
         await view.wait()
         ans = view.children[0].values[0]
