@@ -7,3 +7,5 @@ python-dotenv
 pytubefix
 pytz
 yt-dlp
+akipy
+chinese-converter
