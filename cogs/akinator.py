@@ -4,7 +4,13 @@ from discord.ext import commands
 from chinese_converter import to_traditional as tr
 from akipy.async_akipy import Akinator
 import httpx
-
+class CustomAki(Akinator):
+    def __init__(self):
+        super().__init__()
+        self.client = httpx.AsyncClient(mounts={
+            "http://": "http://13.208.56.180:8080",  # 替換為你的代理地址和端口
+            "https://": "http://13.208.56.180:8080",
+        })
 class Aki(commands.Cog):
     def __init__(self, bot:commands.Bot):
         self.bot = bot
@@ -24,11 +30,7 @@ class Aki(commands.Cog):
         await interaction.followup.send(embed=embed)
 
 async def game(interaction:discord.Interaction) -> Akinator:
-    aki = Akinator()
-    aki.client = httpx.Client(proxies={
-            "http://": "http://13.208.56.180:8080",  # 替換為你的代理地址和端口
-            "https://": "http://13.208.56.180:8080",
-        })
+    aki = CustomAki()
         
     await aki.start_game(language='cn')
     time = 1
