@@ -25,7 +25,8 @@ class Aki(commands.Cog):
         embed = discord.Embed(title=name, description=description, color=discord.Color.blue())
         embed.set_image(url=image_url)
 
-        await interaction.followup.send(embed=embed)
+        msg = await interaction.original_response()
+        await msg.edit(content="", embed=embed)
 
 async def game(interaction: discord.Interaction) -> Akinator:
     aki = Akinator()
