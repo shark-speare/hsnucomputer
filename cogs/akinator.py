@@ -30,7 +30,7 @@ class Aki(commands.Cog):
         await interaction.followup.send(embed=embed)
 
 async def game(interaction:discord.Interaction) -> Akinator:
-    aki = Akinator()
+    aki = CuAki()
     
         
     await aki.start_game(language='cn')
