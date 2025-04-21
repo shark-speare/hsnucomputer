@@ -27,7 +27,7 @@ class Aki(commands.Cog):
         embed.set_footer(text="是嗎")
 
         msg = await interaction.original_response()
-        await msg.edit(content="", embed=embed)
+        await msg.edit(content="", embed=embed, view=None)
         await msg.add_reaction("✅")
         await msg.add_reaction("❌")
 
