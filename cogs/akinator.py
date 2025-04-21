@@ -3,13 +3,17 @@ from discord import app_commands
 from discord.ext import commands
 from chinese_converter import to_traditional as tr
 from akipy.async_akipy import Akinator
+from akipy.dicts import LANG_MAP, THEMES, THEME_ID  # 必要的字典
+from akipy.exceptions import InvalidLanguageError  # 自訂例外
+from akipy.utils import async_request_handler  # 非同步請求工具
+import httpx  # 用於處理 HTTP 請求例外
 
 class Aki(commands.Cog):
-    def __init__(self, bot:commands.Bot):
+    def __init__(self, bot: commands.Bot):
         self.bot = bot
 
     @app_commands.command(description="開始akinator")
-    async def akinator(self, interaction:discord.Interaction):
+    async def akinator(self, interaction: discord.Interaction):
         await interaction.response.send_message("遊戲開始\n請思考一個角色，並根據機器人的問題回答，共有五種不同選項\n若答錯可選擇最下方的「返回上一題」")
         
         aki = await game(interaction)
@@ -22,10 +26,12 @@ class Aki(commands.Cog):
         embed.set_image(url=image_url)
         await interaction.followup.send(embed=embed)
 
-async def game(interaction:discord.Interaction) -> Akinator:
+async def game(interaction: discord.Interaction) -> Akinator:
     aki = Akinator()
-    
-        
+
+    # Monkey Patch __get_region 方法
+    Akinator._Akinator__get_region = patched_get_region
+
     await aki.start_game(language='cn')
     time = 1
     while not aki.win:
@@ -51,7 +57,7 @@ async def game(interaction:discord.Interaction) -> Akinator:
 
 
 class Options(discord.ui.Select):
-    def __init__(self, user:discord.Member):
+    def __init__(self, user: discord.Member):
         self.user = user
         super().__init__(min_values=1, max_values=1, placeholder="請選擇一個答案")
         self.add_option(label="是", value="y")
@@ -70,7 +76,30 @@ class Options(discord.ui.Select):
         await interaction.message.edit(view=self.view)
         self.view.stop()
 
+# Monkey Patch 的新方法
+async def patched_get_region(self, lang):
+    try:
+        if len(lang) > 2:
+            lang = LANG_MAP[lang]
+        else:
+            assert lang in LANG_MAP.values()
+    except Exception:
+        raise InvalidLanguageError(lang)
+    
+    # 修改 URL
+    url = f"akinator.jack04309487.workers.dev/https://{lang}.akinator.com"
+    try:
+        req = await async_request_handler(url=url, method="GET")
+        if req.status_code != 200:
+            raise httpx.HTTPStatusError
+        else:
+            self.uri = url
+            self.lang = lang
 
+            self.available_themes = THEMES[lang]
+            self.theme = THEME_ID[self.available_themes[0]]
+    except Exception as e:
+        raise e
 
 async def setup(bot):
     await bot.add_cog(Aki(bot))
