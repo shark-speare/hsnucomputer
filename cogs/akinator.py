@@ -87,7 +87,7 @@ async def patched_get_region(self, lang):
         raise InvalidLanguageError(lang)
     
     # 修改 URL
-    url = f"akinator.jack04309487.workers.dev/https://{lang}.akinator.com"
+    url = f"https://akinator.jack04309487.workers.dev/https://{lang}.akinator.com"
     try:
         req = await async_request_handler(url=url, method="GET")
         if req.status_code != 200:
