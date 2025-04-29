@@ -37,7 +37,7 @@ class Chat(commands.Cog):
 
         except:
             sent = await msg.channel.send("伺服器過載，請稍後再試(可將剛發送的訊息先刪除)")
-            asyncio.sleep(5)
+            await asyncio.sleep(5)
             await sent.delete()
 
 async def setup(bot:commands.Bot):
