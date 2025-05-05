@@ -17,59 +17,67 @@ class Hsnu(commands.Cog):
         url = 'https://www.hs.ntnu.edu.tw/rssfeeds?a=T0RESTEyNTIxODAyNTk2MjI2MVRDaW50ZWx5&b=T0RESTYyaW50ZWx5&c=T0RESU1EVTNOakl5TXpjPXdBek55SWpOeElrVGludGVseQ=='
         content:list = feedparser.parse(url)['entries']
     
-        #定義選單內容
-        class Choose(discord.ui.View,):
-            def __init__(self):
-                super().__init__()
-                self.user = interaction.user.id
+        titles = [article['title'] for article in content]
 
-            #利用for迴圈建立5個選項
-            @discord.ui.select(placeholder='請選擇公告項目',min_values=1,max_values=1,options=[
-                SelectOption(label=i['title'],value=str(content.index(i))) for i in content],custom_id='select')
-            #定義選單的callback
-            async def callback(self,interaction:discord.Interaction,select):
-                if interaction.user.id != self.user:
-                    return await interaction.response.send('你沒有權限使用此選單',ephemeral=True)
-                #建立html剖析器
-                class htmlparser(HTMLParser):
-                    def __init__(self):
-                        super().__init__()
-                        self.result = ""
+        choice = Title(titles, interaction.user)
+        view = discord.ui.View(timeout=60)
+        view.add_item(choice)
 
-                    def handle_starttag(self, tag, attrs):
-                        if tag == 'img':
-                            self.result += f'{attrs[2][1]}'
+        await interaction.followup.send(view=view)
 
+        timeout = await view.wait()
+        if timeout:
+            await interaction.edit_original_response(content="請求過久，請重新使用指令", view=None)
+            return
 
-                    def handle_data(self,data: str) -> None:
-                        self.result += data
+        title = view.children[0].values[0]
 
-                #製作內容
-                data = content[int(select.values[0])]
-                
-                title = data['title']
-                
-                parser = htmlparser()
-                parser.feed(data['summary'])
-                summary =  parser.result
-                
-                link = data['link']
-
-                #最終結果
-                send = f'''**{title}**\n
-{summary}
-[點我前往本文]({link})
-'''
-                #將選單設為無效
-                select.disabled = True
-                await interaction.response.edit_message(content=send,view = self)
-                
-
-        #定義選單物件
-        view = Choose()
+        article = list(filter(lambda x:x['title']==title, content))[0]
         
-        await interaction.followup.send("已取得最新資料",view=view)
+        datetime = article['published']
+
+        parser = Handler()
+        parser.feed(article['summary'])
         
+        content = "".join(parser.result)
+
+        view = discord.ui.View()
+        view.add_item(Link(article['links'][0]['href']))
+
+        await interaction.edit_original_response(content="\n".join(("## "+title, datetime+"\n", content)), view=view)
+
+
+        
+class Title(discord.ui.Select):
+    def __init__(self, titles:list, user):
+        super().__init__(min_values=1, max_values=1, placeholder="選擇一個標題")
+        self.user = user
+        for title in titles:
+            self.add_option(label=title, value=title)
+
+    async def callback(self,interaction):
+        if interaction.user != self.user:
+            await interaction.response.send_message("這不是你的選單", ephemeral=True)
+            return
+
+        await interaction.response.defer()
+        self.disabled=True
+        await interaction.message.edit(content="正在取得內容，請稍候", view=self.view)
+        self.view.stop()
+
+class Link(discord.ui.Button):
+    def __init__(self, link:str):
+        super().__init__(label="點我前往本文", url=link)
+
+class Handler(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.result = []
+
+    def handle_data(self, data):
+        self.result.append(data)
+        
+
 
 async def setup(bot):
     await bot.add_cog(Hsnu(bot))
