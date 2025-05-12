@@ -33,7 +33,7 @@ class Chat(commands.Cog):
             )
 
             webhook = await self.bot.fetch_webhook(1346010742683471872)
-            await webhook.send(response.text)
+            await webhook.send(discord.utils.escape_markdown(response.text))
 
         except Exception as e:
             print(e)
