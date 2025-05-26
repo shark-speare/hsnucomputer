@@ -42,8 +42,7 @@ async def game(interaction: discord.Interaction) -> Akinator:
     await aki.start_game(language='cn')
     time = 1
     while not aki.win:
-        view = discord.ui.View()
-        view.add_item(Options(interaction.user))
+        view = OptionsView(interaction.user)
 
         question = tr(str(aki))
 
@@ -51,7 +50,7 @@ async def game(interaction: discord.Interaction) -> Akinator:
         await msg.edit(content=f"{time}. {question}\n({interaction.user.display_name}的遊戲)", view=view)
 
         await view.wait()
-        ans = view.children[0].values[0]
+        ans = view.value
 
         if ans == "b":
             await aki.back()
@@ -64,25 +63,54 @@ async def game(interaction: discord.Interaction) -> Akinator:
     return aki
 
 
-class Options(discord.ui.Select):
+class OptionsView(discord.ui.View):
     def __init__(self, user: discord.Member):
+        super().__init__()
         self.user = user
-        super().__init__(min_values=1, max_values=1, placeholder="請選擇一個答案")
-        self.add_option(label="是", value="y")
-        self.add_option(label="不是", value="n")
-        self.add_option(label="不知道", value="i")
-        self.add_option(label="可能是", value="p")
-        self.add_option(label="可能不是", value="pn")
-        self.add_option(label="返回上一題", value="b")
+        self.value = None
 
-    async def callback(self, interaction):
-        await interaction.response.defer()
+    async def interaction_check(self, interaction: discord.Interaction) -> bool:
         if interaction.user != self.user:
-            await interaction.followup.send("這不是你的遊戲", ephemeral=True)
-            return
-        self.disabled = True
-        await interaction.message.edit(view=self.view)
-        self.view.stop()
+            await interaction.response.send_message("這不是你的遊戲", ephemeral=True)
+            return False
+        return True
+
+    @discord.ui.button(label="是", style=discord.ButtonStyle.green)
+    async def yes(self, interaction: discord.Interaction, button: discord.ui.Button):
+        self.value = "y"
+        await interaction.response.defer()
+        self.stop()
+
+    @discord.ui.button(label="不是", style=discord.ButtonStyle.red)
+    async def no(self, interaction: discord.Interaction, button: discord.ui.Button):
+        self.value = "n"
+        await interaction.response.defer()
+        self.stop()
+
+    @discord.ui.button(label="不知道", style=discord.ButtonStyle.gray)
+    async def idk(self, interaction: discord.Interaction, button: discord.ui.Button):
+        self.value = "i"
+        await interaction.response.defer()
+        self.stop()
+
+    @discord.ui.button(label="可能是", style=discord.ButtonStyle.blurple)
+    async def probably(self, interaction: discord.Interaction, button: discord.ui.Button):
+        self.value = "p"
+        await interaction.response.defer()
+        self.stop()
+
+    @discord.ui.button(label="可能不是", style=discord.ButtonStyle.blurple)
+    async def probably_not(self, interaction: discord.Interaction, button: discord.ui.Button):
+        self.value = "pn"
+        await interaction.response.defer()
+        self.stop()
+
+    @discord.ui.button(label="返回上一題", style=discord.ButtonStyle.gray)
+    async def back(self, interaction: discord.Interaction, button: discord.ui.Button):
+        self.value = "b"
+        await interaction.response.defer()
+        self.stop()
+
 
 # Monkey Patch 的新方法
 async def patched_get_region(self, lang):
