@@ -14,7 +14,7 @@ class Lookup(commands.Cog):
     @app_commands.command(description="查詢機研社目前票數")
     async def lookup(self, interaction:discord.Interaction):
         await interaction.response.defer()
-        service = EdgeService(executable_path='../msedgedriver')
+        service = EdgeService(executable_path='./msedgedriver')
         options = EdgeOptions()
         options.add_argument('--headless')
         driver = Edge(options=options, service=service)
