@@ -1,7 +1,7 @@
 import discord
 from discord import app_commands
 from discord.ext import commands
-from selenium.webdriver import Edge, EdgeOptions
+from selenium.webdriver import Edge, EdgeOptions, EdgeService
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -14,10 +14,10 @@ class Lookup(commands.Cog):
     @app_commands.command(description="查詢機研社目前票數")
     async def lookup(self, interaction:discord.Interaction):
         await interaction.response.defer()
-
+        service = EdgeService(executable_path='../msedgedriver')
         options = EdgeOptions()
         options.add_argument('--headless')
-        driver = Edge(options=options)
+        driver = Edge(options=options, service=service)
 
         driver.get("https://download.parenting.com.tw/edu100/2025/")
 
