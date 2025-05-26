@@ -10,3 +10,4 @@ yt-dlp
 akipy
 chinese-converter
 googletrans
+selenium
