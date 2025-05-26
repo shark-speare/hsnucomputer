@@ -1,10 +1,9 @@
 import discord
 from discord import app_commands
 from discord.ext import commands
-from selenium.webdriver import Chrome, ChromeOptions, ChromeService
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+from bs4 import BeautifulSoup
+import requests
+
 
 
 class Lookup(commands.Cog):
@@ -14,27 +13,12 @@ class Lookup(commands.Cog):
     @app_commands.command(description="查詢機研社目前票數")
     async def lookup(self, interaction:discord.Interaction):
         await interaction.response.defer()
-        service = ChromeService(executable_path='./chromedriver')
-        options = ChromeOptions()
-        for arg in [
-    "--headless=new", "--no-sandbox", "--disable-dev-shm-usage", "--disable-gpu",
-    "--disable-software-rasterizer", "--disable-extensions", "--disable-background-networking",
-    "--disable-sync", "--metrics-recording-only", "--mute-audio", "--disable-default-apps",
-    "--no-first-run", "--no-zygote", "--single-process"]:
-            options.add_argument(arg)
+        
+        web = requests.get("https://download.parenting.com.tw/edu100/2025/")
+        soup = BeautifulSoup(web.text, 'html.parser')
 
-        # driver = Edge(options=options, service=service)
-        driver = Chrome(options=options)
+        vote_count = soup.select('div.ProductCard[data-id="b7133333-35aa-11f0-b161-ca5333f82c7a"] span.vote-count')[0].text
 
-        driver.get("https://download.parenting.com.tw/edu100/2025/")
-
-        wait = WebDriverWait(driver, 10)
-        vote_count_elem = wait.until(
-            EC.visibility_of_element_located(
-                (By.CSS_SELECTOR, 'div.ProductCard[data-id="b7133333-35aa-11f0-b161-ca5333f82c7a"] span.vote-count')
-            )
-        )
-        vote_count = vote_count_elem.text
 
         await interaction.followup.send(f"機研社目前票數為{vote_count}")
 
