@@ -5,6 +5,10 @@ from bs4 import BeautifulSoup
 import requests
 
 
+class Button(discord.ui.Button):
+    def __init__(self):
+        super().__init__(label='前往所有票數', url="https://download.parenting.com.tw/edu100/2025/")
+
 
 class Lookup(commands.Cog):
     def __init__(self, bot:commands.Bot):
@@ -18,9 +22,9 @@ class Lookup(commands.Cog):
         soup = BeautifulSoup(web.text, 'html.parser')
 
         vote_count = soup.select('div.ProductCard[data-id="b7133333-35aa-11f0-b161-ca5333f82c7a"] span.vote-count')[0].text
-
-
-        await interaction.followup.send(f"機研社目前票數為{vote_count}")
+        view = discord.ui.View()
+        view.add_item(Button())
+        await interaction.followup.send(f"機研社目前票數為{vote_count}", view=view)
 
 async def setup(bot):
     await bot.add_cog(Lookup(bot))
