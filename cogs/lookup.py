@@ -1,7 +1,7 @@
 import discord
 from discord import app_commands
 from discord.ext import commands
-from selenium.webdriver import Edge, EdgeOptions, EdgeService
+from selenium.webdriver import Chrome, ChromeOptions, ChromeService
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -14,10 +14,14 @@ class Lookup(commands.Cog):
     @app_commands.command(description="查詢機研社目前票數")
     async def lookup(self, interaction:discord.Interaction):
         await interaction.response.defer()
-        service = EdgeService(executable_path='./msedgedriver')
-        options = EdgeOptions()
+        service = ChromeService(executable_path='./chromedriver')
+        options = ChromeOptions()
         options.add_argument('--headless')
-        driver = Edge(options=options, service=service)
+        options.add_argument('--no-sandbox')
+        options.add_argument('--disable-dev-shm-usage')
+
+        # driver = Edge(options=options, service=service)
+        driver = Chrome(options=options)
 
         driver.get("https://download.parenting.com.tw/edu100/2025/")
 
