@@ -16,9 +16,12 @@ class Lookup(commands.Cog):
         await interaction.response.defer()
         service = ChromeService(executable_path='./chromedriver')
         options = ChromeOptions()
-        options.add_argument('--headless')
-        options.add_argument('--no-sandbox')
-        options.add_argument('--disable-dev-shm-usage')
+        for arg in [
+    "--headless=new", "--no-sandbox", "--disable-dev-shm-usage", "--disable-gpu",
+    "--disable-software-rasterizer", "--disable-extensions", "--disable-background-networking",
+    "--disable-sync", "--metrics-recording-only", "--mute-audio", "--disable-default-apps",
+    "--no-first-run", "--no-zygote", "--single-process"]:
+            options.add_argument(arg)
 
         # driver = Edge(options=options, service=service)
         driver = Chrome(options=options)
