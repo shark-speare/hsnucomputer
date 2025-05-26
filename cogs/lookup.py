@@ -24,6 +24,9 @@ class Lookup(commands.Cog):
         vote_count = soup.select('div.ProductCard[data-id="b7133333-35aa-11f0-b161-ca5333f82c7a"] span.vote-count')[0].text
         view = discord.ui.View()
         view.add_item(Button())
+        view.add_item(Button())
+        view.children[1].url="https://download.parenting.com.tw/edu100/2025/vote/b7133333-35aa-11f0-b161-ca5333f82c7a"
+        view.children[1].label="前往投票"
         await interaction.followup.send(f"機研社目前票數為{vote_count}", view=view)
 
 async def setup(bot):
