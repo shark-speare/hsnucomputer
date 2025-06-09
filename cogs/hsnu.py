@@ -9,7 +9,7 @@ class Hsnu(commands.Cog):
     def __init__(self, bot:commands.Bot):
         self.bot = bot
 
-    @app_commands.command()
+    @app_commands.command(description="取得師大附中最新公告")
     async def announcement(self, interaction:discord.Interaction):
         await interaction.response.defer() # 一定要進思考，因為取得資料需要時間
 
@@ -18,10 +18,14 @@ class Hsnu(commands.Cog):
         soup = BeautifulSoup(feed, 'xml')
         items = soup.find_all('item') # 取得所有文章的列表
 
-        view = ui.View()
+        view = ui.View(timeout=60)
         view.add_item(Select(items))
 
         await interaction.followup.send(view=view)
+
+        timeout = await view.wait()
+        if timeout:
+            await interaction.edit_original_response(content="請求超時，請重新使用指令", view=None)
 
 def extract(item):
     
