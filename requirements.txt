@@ -11,3 +11,4 @@ akipy
 chinese-converter
 googletrans
 beautifulsoup4
+lxml
