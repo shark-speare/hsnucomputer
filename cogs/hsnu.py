@@ -18,7 +18,7 @@ class Hsnu(commands.Cog):
         soup = BeautifulSoup(feed, 'xml')
         items = soup.find_all('item') # 取得所有文章的列表
 
-        view = ui.View(timeout=60)
+        view = ui.View(timeout=30)
         view.add_item(Select(items))
 
         await interaction.followup.send(view=view)
@@ -67,6 +67,7 @@ class Select(ui.Select):
         view = ui.View()
         view.add_item(Link(item.link.text))
         await interaction.message.edit(content=message, view=view)
+        self.view.stop()
 
 class Link(ui.Button):
     def __init__(self, link):
