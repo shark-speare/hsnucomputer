@@ -121,12 +121,11 @@ class Count(commands.Cog):
         msgs = 0
 
         async for message in interaction.channel.history(limit=None):
-            if message.author == 使用者:
-                try:
-                    enter = hanzi2number(message.content) or int(message.content)
-                except ValueError:
-                    continue
-                msgs+=1
+            if len(message.reactions) > 0 and message.author == 使用者:
+                if message.reactions[0].emoji == "✅":
+                    print(message.content)
+
+                    msgs+=1
 
         await interaction.followup.send(f"{使用者.display_name}的數量是{msgs}")
             
