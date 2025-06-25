@@ -113,6 +113,22 @@ class Count(commands.Cog):
                 return
             if msg.id == data['msg']:
                 await msg.delete()
+
+    @app_commands.command(description="查看該頻道特定使用者的訊息數量")
+    async def history(self, interaction:discord.Interaction, 使用者:discord.User):
+        await interaction.response.defer()
+
+        msgs = 0
+
+        async for message in interaction.channel.history(limit=None):
+            if message.author == 使用者:
+                try:
+                    enter = hanzi2number(message.content) or int(message.content)
+                except ValueError:
+                    continue
+                msgs+=1
+
+        await interaction.followup.send(f"{使用者.display_name}的數量是{msgs}")
             
 async def setup(bot):
     await bot.add_cog(Count(bot))
