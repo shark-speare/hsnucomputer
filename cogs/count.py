@@ -119,15 +119,17 @@ class Count(commands.Cog):
         await interaction.response.defer()
 
         msgs = 0
+        messages = []
 
         async for message in interaction.channel.history(limit=None):
             if len(message.reactions) > 0 and message.author == 使用者:
                 if message.reactions[0].emoji == "✅":
-                    print(message.content)
+                    messages.append(message.content)
 
                     msgs+=1
 
         await interaction.followup.send(f"{使用者.display_name}的數量是{msgs}")
+        await interaction.followup.send(f"訊息內容: {" ".join(messages)}", ephemeral=True)
             
 async def setup(bot):
     await bot.add_cog(Count(bot))
